@@ -11,7 +11,7 @@ import { AuthEntity } from './auth/auth.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5050,
+      port: 5432,
       username: 'postgres',
       password: 'Badmantons10',
       database: 'eventos',
