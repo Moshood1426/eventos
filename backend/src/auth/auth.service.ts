@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthEntity } from './auth.entity';
 import { RegisterUserDto } from './dto/register-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -13,13 +14,17 @@ export class AuthService {
   ) {}
 
   async register(body: RegisterUserDto) {
-    const { email, password, role } = body;
-    const user = await this.authRepo.findOne({ where: { email } });
+    const { email, password: rawPassword, role } = body;
+    const userExists = await this.authRepo.findOne({ where: { email } });
 
-    if (user) {
+    if (userExists) {
       throw new BadRequestException('User with email exists');
     }
 
-    
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(rawPassword, salt);
+
+    const user = await this.authRepo.create({ ...body, password });
+    return this.authRepo.save(user);
   }
 }
