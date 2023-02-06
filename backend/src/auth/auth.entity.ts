@@ -4,11 +4,15 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 export class AuthEntity {
   @PrimaryGeneratedColumn()
   id: number;
-  
+
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: ['creator', 'consumer'],
+    default: 'consumer',
+  })
   role: string;
 
   @Column()
