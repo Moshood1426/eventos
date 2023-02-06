@@ -1,61 +1,193 @@
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans:400,600,700&display=swap");
 @import "./varibles.scss";
 @import "./breakpoints.scss";
-@import "./components/header.scss";
-@import "./components/banner.scss";
-@import "./components/cases.scss";
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body,
 html {
   user-select: none;
-  background: $white;
+  background: $primary-100;
   overscroll-behavior: none;
   margin: 0;
-  font-family: "Josefin Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: $AirBnBLight, "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif ;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
-  width: 1560px;
-  min-width: 1560px;
-  margin: 0 auto;
-  height: 100%;
-  @include media("<=1560px") {
-    width: 1280px;
-    min-width: 1280px;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  margin-bottom: 1.2rem;
+  font-family: $AirBnBDark;
+  line-height: 1.3;
+  text-transform: capitalize;
+  letter-spacing: $letterSpacing;
+}
+
+h1 {
+  font-size: 3.052rem;
+}
+
+h2 {
+  font-size: 2.441rem;
+}
+
+h3 {
+  font-size: 1.953rem;
+}
+
+h4 {
+  font-size: 1.563rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin-bottom: 1.4rem;
+  max-width: 40em;
+  font-family: $AirBnBLight, "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+  "Helvetica Neue", sans-serif ;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.btn {
+  cursor: pointer;
+  color: $grey-100;
+  background: $primary-400;
+  letter-spacing: $letterSpacing;
+  padding: 0.375rem 0.75rem;
+  box-shadow: $shadow-2;
+  transition: $transition;
+  text-transform: capitalize;
+  display: inline-block;
+  font-family: $AirBnBMedium, 'sans-serif';
+  font-weight: bold;
+  font-size: 1rem;
+
+  &:hover {
+    background: $primary-300;
+    box-shadow: $shadow-3;
+    // color: $accentColor;
   }
-  @include media("<=desktop") {
-    width: 1080px;
-    min-width: 1080px;
-  }
-  @include media("<=1080px") {
-    width: 100%;
-    min-width: 100%;
-  }
-  .row {
-    display: flex;
-    height: 100%;
-    padding: 0 32px;
-    @include media("<=phone") {
-      padding: 0 16px;
-    }
-  }
-  .v-center {
-    align-items: center;
-  }
-  .space-between {
-    justify-content: space-between;
+
+  &-block {
+    height: 35px;
   }
 }
 
-.container-fluid {
-  width: 100%;
-  height: 100%;
-  .row {
-    display: flex;
-    height: 100%;
+.form {
+  width: 85%;
+  max-width: 600px;
+  margin: 3rem auto;
+  transition: $transition;
+
+  &_row {
+    margin-bottom: 1rem;
+  }
+
+  &_label {
+    display: block;
+    font-size: $smallText;
+    margin-bottom: 0.5rem;
+    text-transform: capitalize;
+    letter-spacing: $letterSpacing;
+  }
+
+  &_input,
+  &_select {
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    background: $primary-100;
+    border: 1px solid $primary-300;
+    color: $grey-100;
+  }
+
+  &_input,
+  &_select {
+    height: 45px;
   }
 }
+
+::placeholder {
+  font-family: inherit;
+  color: #535851;
+  text-transform: capitalize;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px $primary-200 inset !important;
+    box-shadow: 0 0 0 30px $primary-200 inset !important;
+}
+
+input:-webkit-autofill{
+  -webkit-text-fill-color:  $grey-100 !important;
+}
+
+// .container {
+//   width: 1560px;
+//   min-width: 1560px;
+//   margin: 0 auto;
+//   height: 100%;
+//   @include media("<=1560px") {
+//     width: 1280px;
+//     min-width: 1280px;
+//   }
+//   @include media("<=desktop") {
+//     width: 1080px;
+//     min-width: 1080px;
+//   }
+//   @include media("<=1080px") {
+//     width: 100%;
+//     min-width: 100%;
+//   }
+//   .row {
+//     display: flex;
+//     height: 100%;
+//     padding: 0 32px;
+//     @include media("<=phone") {
+//       padding: 0 16px;
+//     }
+//   }
+//   .v-center {
+//     align-items: center;
+//   }
+//   .space-between {
+//     justify-content: space-between;
+//   }
+// }
+
+// .container-fluid {
+//   width: 100%;
+//   height: 100%;
+//   .row {
+//     display: flex;
+//     height: 100%;
+//   }
+// }
