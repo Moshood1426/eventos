@@ -1,0 +1,105 @@
+.nav {
+  height: 10vh;
+  position: relative;
+
+  &_container {
+    max-width: $maxWidth;
+    margin: 0 auto;
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &_logo {
+    span {
+      font-size: 1.2rem;
+      letter-spacing: 0.5rem;
+      color: #211a93;
+      text-decoration: none;
+      font-weight: 700;
+      font-family: $AirBnBDark;
+    }
+  }
+
+  &_items {
+    display: flex;
+    gap: 1.5em;
+    font-size: $smallText;
+    align-items: center;
+
+    @include media("<=tablet") {
+      display: none;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &_menu {
+    position: absolute;
+    z-index: 1;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 20px;
+    width: 28px;
+    cursor: pointer;
+    transition: $transition;
+    display: block;
+
+    @include media(">tablet") {
+      display: none;
+    }
+
+    &__burger {
+      position: absolute;
+      right: 0;
+      top: 0.5rem;
+      width: 28px;
+      height: 3px;
+      background: $primary-500;
+      transition: $transition;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: -8px;
+        width: 28px;
+        height: 3px;
+        background: $primary-500;
+        transition: $transition;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 8px;
+        width: 20px;
+        height: 3px;
+        background: $primary-500;
+        transition: $transition;
+      }
+
+      &.open {
+        transform: rotate(720deg);
+        background: transparent;
+
+        &::before {
+          transform: rotate(45deg) translate(5px, 8px);
+        }
+
+        &::after {
+          width: 28px;
+          transform: rotate(-45deg) translate(3px, -7px);
+        }
+      }
+    }
+  }
+}
+
+.nav_form_input {
+  height: 30px;
+}
