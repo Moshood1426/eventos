@@ -40,8 +40,28 @@
   }
 
   &_sub_header {
-    font-size: 1.34rem;
+    font-size: 1.4rem;
     color: $primary-300;
+    display: flex;
+    align-items: center;
+    svg {
+      margin-left: 16px;
+      border: 2px solid $primary-300;
+      // padding: 12px;
+      height: 24px;
+      width: 24px;
+      border-radius: 100px;
+      transition: $transition;
+    }
+
+    &:hover {
+      color: $primary-400;
+      cursor: pointer;
+
+      svg {
+        border: 2px solid $primary-400;
+      }
+    }
   }
 }
 

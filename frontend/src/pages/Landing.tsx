@@ -1,6 +1,6 @@
 import React from "react";
 import { Navbar } from "../components";
-import { ReactComponent as RightArrow } from "../assets/arrow-right.svg";
+import { ReactComponent as ReactLogo } from "../assets/images/arrow-right.svg"
 
 const Landing = () => {
   return (
@@ -21,7 +21,7 @@ const Landing = () => {
           </h1>
           <p className="intro_sub_header">
             Start exploring event
-            <RightArrow />
+            <ReactLogo />
           </p>
         </div>
       </div>
