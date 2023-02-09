@@ -1,3 +1,4 @@
 import Navbar from "./Navbar";
+import SingleRecentEvent from "./SingleRecentEvent";
 
-export { Navbar };
+export { Navbar, SingleRecentEvent };
