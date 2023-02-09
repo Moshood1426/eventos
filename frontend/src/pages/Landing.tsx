@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Recent1 from "../assets/images/recent1.jpg";
 import Recent2 from "../assets/images/recent2.jpg";
 import Recent3 from "../assets/images/recent3.jpg";
-import { SingleRecentEvent } from "../components";
+import { SingleRecentEvent, SingleRecommended } from "../components";
 
 const Landing = () => {
   const recentEventData = [
@@ -29,6 +29,33 @@ const Landing = () => {
     },
   ];
   const overlayRef = useRef(null);
+
+  const reccommendedData = [
+    {
+      id: 1,
+      title: "French Embassy Concerts & Wine Reception",
+      category: "Soccer",
+      img: Recent1,
+    },
+    {
+      id: 2,
+      title: "England Embassy Concerts & Wine Reception",
+      category: "Banquet",
+      img: Recent2,
+    },
+    {
+      id: 3,
+      title: "Uruguay Embassy Concerts & Wine Reception",
+      category: "Party",
+      img: Recent3,
+    },
+    {
+      id: 4,
+      title: "Uruguay Embassy Concerts & Wine Reception",
+      category: "Soccer",
+      img: Recent3,
+    },
+  ];
 
   useEffect(() => {
     // Preventing flash from happening.
@@ -117,7 +144,36 @@ const Landing = () => {
           </div>
         </div>
       </div>
-      Landing here
+      <div className="recommended">
+        <h4>Checkout these events</h4>
+        <div className="recommended_events">
+          {reccommendedData.map((item) => {
+            return (
+              <SingleRecommended
+                key={item.id}
+                {...item}
+                active={item.id === 2 || item.id === 3 ? true : false}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="creator">
+        <p>
+          You can also put your events out there for our exciting visitiors.
+        </p>
+        <button className="btn">Become a creator</button>
+      </div>
+
+      <div className="footer">
+        <div className="footer_container">
+          <span>Thanks for checking out our events</span>
+          <span>Thanks for checking out our events</span>
+          <span>Thanks for checking out our events</span>
+          <span>Thanks for checking out our events</span>
+        </div>
+      </div>
     </div>
   );
 };
