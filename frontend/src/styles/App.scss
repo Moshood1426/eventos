@@ -6,6 +6,7 @@
 @import "./pages/landing.scss";
 @import "./components/SingleRecentEvent.scss";
 @import "./components/SingleRecommended.scss";
+@import "./pages/register.scss";
 
 *,
 ::after,
@@ -17,7 +18,7 @@
 
 body,
 html {
-  visibility: hidden;
+  // visibility: hidden;
   user-select: none;
   background: $primary-100;
   overscroll-behavior: none;
@@ -93,13 +94,14 @@ img {
   background: $primary-300;
   letter-spacing: $letterSpacing;
   padding: 0.375rem 0.75rem;
-  box-shadow: $shadow-2;
+  box-shadow: $shadow-1;
   transition: $transition;
   text-transform: capitalize;
-  display: inline-block;
+  display: block;
   font-family: $AirBnBMedium, "sans-serif";
   font-weight: bold;
   font-size: 1rem;
+  margin-bottom: 1rem;
 
   &:hover {
     background: $primary-400;
@@ -114,10 +116,24 @@ img {
 }
 
 .form {
-  width: 85%;
+  width: 90%;
   max-width: 600px;
-  margin: 3rem auto;
+  //margin: 3rem auto;
   transition: $transition;
+
+  @include media(">=phone") {
+    &_dual_row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+      transition: $transition;
+    }
+  }
+
+  &_title {
+    font-family: $AirBnBMedium;
+    color: $primary-500;
+  }
 
   &_row {
     margin-bottom: 1rem;
@@ -137,13 +153,18 @@ img {
     padding: 0.375rem 0.75rem;
     background: $primary-100;
     border: 1px solid $primary-300;
-    color: $grey-100;
+    color: $primary-600;
+    font-family: $AirBnBLight;
   }
 
   &_input,
   &_select {
     height: 45px;
   }
+}
+
+select {
+  color: red;
 }
 
 ::placeholder {
@@ -166,6 +187,11 @@ input:-webkit-autofill {
 
 .nav_form_input {
   height: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 // .container {

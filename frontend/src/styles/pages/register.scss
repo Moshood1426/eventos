@@ -1,0 +1,33 @@
+.register {
+  &_cont {
+    width: 90%;
+    max-width: $maxWidth;
+    margin: 0 auto;
+    margin-top: 3rem;
+
+    .btn {
+      padding: 0.75em 1.8em;
+    }
+
+    .forgot-pass {
+      font-size: $smallText;
+      color: $grey-600;
+      cursor: pointer;
+
+      :hover {
+        color: $grey-800;
+      }
+    }
+  }
+
+  &_img {
+    height: 150px;
+    width: 100%;
+    margin-bottom: 2rem;
+    svg {
+      max-height: 100%;
+      width: fit-content;
+      margin: 0 0;
+    }
+  }
+}
