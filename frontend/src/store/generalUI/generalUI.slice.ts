@@ -37,6 +37,11 @@ const generalUISlice = createSlice({
       state.alertType = "danger";
       state.showAlert = true;
     },
+    resetShowAlert(state) {
+      state.alertText = "";
+      state.alertType = "";
+      state.showAlert = false;
+    },
   },
 });
 

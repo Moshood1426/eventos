@@ -6,7 +6,8 @@ import FormSelectItem from "../components/FormSelectItem";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useNavigate } from "react-router-dom";
 import { registerUser, loginUser } from "../store/auth/auth.actions";
-import { generalUIActions } from "../store/generalUI/generalUI.slice";
+import Alert from "../components/Alert";
+import { invalidAction } from "../store/generalUI/generalUI.actions";
 
 const initialState: {
   email: string;
@@ -28,7 +29,7 @@ const Register = () => {
   const [clientIsUser, setClientIsUser] = useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
-  const { invalidAction } = generalUIActions;
+  const { showAlert } = useAppSelector((state) => state.generalUI);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -82,6 +83,7 @@ const Register = () => {
           creation
         </p>
         <form onSubmit={handleSubmit} className="form">
+          {showAlert && <Alert />}
           {!clientIsUser && (
             <div className="form_dual_row">
               <FormItem
