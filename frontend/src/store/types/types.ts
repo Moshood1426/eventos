@@ -21,6 +21,17 @@ export interface LoginAction {
   };
 }
 
+export interface RegisterAction {
+  type: string;
+  payload: {
+    email: string;
+    id: number;
+    token: string;
+    role: "consumer" | "creator";
+    name: string;
+  };
+}
+
 export interface User {
   email: string;
   id: number;
