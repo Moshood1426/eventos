@@ -63,10 +63,10 @@ const Register = () => {
     let userObj;
     if (!clientIsUser) {
       userObj = { name, role, email: email.toLowerCase(), password };
-      registerUser(userObj);
+      dispatch(registerUser(userObj));
     } else {
       userObj = { email: email.toLowerCase(), password };
-      loginUser(userObj);
+      dispatch(loginUser(userObj));
     }
   };
 

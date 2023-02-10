@@ -48,6 +48,7 @@ export const handleAxiosError = (error: any): { message: string } => {
   if (!result) {
     result = { message: "An unexpected error occurred" };
   }
+  console.log(result)
   return result;
 };
 

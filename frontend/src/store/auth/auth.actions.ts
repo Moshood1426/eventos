@@ -3,6 +3,7 @@ import { generalUIActions } from "../generalUI/generalUI.slice";
 import axios from "axios";
 import { handleAxiosError } from "../axios";
 import { User } from "../types/types";
+import { invalidAction } from "../generalUI/generalUI.actions";
 
 interface LoginUserResponse {
   name: string;
@@ -16,9 +17,12 @@ const loginUser = (userInfo: { email: string; password: string }) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
-      const { data } = await axios.post<LoginUserResponse>("/auth/login", {
-        ...userInfo,
-      });
+      const { data } = await axios.post<LoginUserResponse>(
+        "/api/v1/auth/login",
+        {
+          ...userInfo,
+        }
+      );
 
       dispatch(generalUIActions.isLoadingCompleted());
       dispatch(authActions.login(data));
@@ -26,12 +30,7 @@ const loginUser = (userInfo: { email: string; password: string }) => {
       addUserToLocalStorage({ id: data.id, email: data.email }, data.token);
     } catch (error) {
       const result = handleAxiosError(error);
-      const data = {
-        showAlert: true,
-        alertType: "danger",
-        alertText: result.message,
-      };
-      dispatch(generalUIActions.dataFetched(data));
+      dispatch(invalidAction(result.message));
     }
   };
 };
@@ -55,12 +54,7 @@ const registerUser = (userInfo: {
       addUserToLocalStorage({ id: data.id, email: data.email }, data.token);
     } catch (error) {
       const result = handleAxiosError(error);
-      const data = {
-        showAlert: true,
-        alertType: "danger",
-        alertText: result.message,
-      };
-      dispatch(generalUIActions.dataFetched(data));
+      dispatch(invalidAction(result.message));
     }
   };
 };

@@ -25,12 +25,6 @@ const generalUISlice = createSlice({
     isLoadingCompleted(state) {
       state.isLoading = false;
     },
-    dataFetched(state, action: DataFetchedAction) {
-      state.isLoading = false;
-      state.alertText = action.payload.alertText;
-      state.alertType = action.payload.alertType;
-      state.showAlert = action.payload.showAlert;
-    },
     invalidAction(state, action: { type: string; payload: string }) {
       state.isLoading = false;
       state.alertText = action.payload;
