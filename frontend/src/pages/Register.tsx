@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navbar, NavMenu } from "../components";
+import { Navbar } from "../components";
 import { ReactComponent as Welcome } from "../assets/images/welcomeImg.svg";
 import FormItem from "../components/FormItem";
 import FormSelectItem from "../components/FormSelectItem";
@@ -7,7 +7,7 @@ import FormSelectItem from "../components/FormSelectItem";
 const initialState = {
   name: "",
   role: "customer",
-  roleOptions: ["select role", "customer", "creator"],
+  roleOptions: ["customer", "creator"],
   email: "",
   password: "",
 };
@@ -29,7 +29,7 @@ const Register = () => {
 
   return (
     <div>
-      <Navbar setClientIsUser={setClientIsUser}/>
+      <Navbar setClientIsUser={setClientIsUser} />
       <div className="register_cont">
         <div className="register_img">
           <Welcome />

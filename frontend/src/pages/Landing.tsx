@@ -7,6 +7,8 @@ import Recent2 from "../assets/images/recent2.jpg";
 import Recent3 from "../assets/images/recent3.jpg";
 import { SingleRecentEvent, SingleRecommended } from "../components";
 
+let firstRender = true
+
 const Landing = () => {
   const recentEventData = [
     {
@@ -58,10 +60,14 @@ const Landing = () => {
   ];
 
   useEffect(() => {
+    // if(firstRender) {
+    //   firstRender = false
+    //   return
+    // }
     // Preventing flash from happening.
-    gsap.to("body", 0, { css: { visibility: "visible" } });
+    // gsap.to("body", { css: { visibility: "visible", duration: 0} });
 
-    // //On load timeline
+    // // //On load timeline
     // const tl = gsap.timeline();
 
     // tl.from(overlayRef.current, {
