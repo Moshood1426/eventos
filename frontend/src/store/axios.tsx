@@ -1,14 +1,13 @@
 import axios from "axios";
 import store from ".";
 import { selectToken } from "./auth/auth.slice";
-import { useAppSelector } from "./hooks";
 
 // axios
 const authFetch = axios.create({
   baseURL: "/api/v1",
 });
 // request
-const token = selectToken(store.getState())
+const token = selectToken(store.getState());
 
 authFetch.interceptors.request.use(
   (config) => {
@@ -28,10 +27,28 @@ authFetch.interceptors.response.use(
   (error) => {
     // console.log(error.response)
     if (error.response.status === 401) {
-    //   logoutUser();
+      //   logoutUser();
     }
     return Promise.reject(error);
   }
 );
 
-export default authFetch
+export const handleAxiosError = (error: any): { message: string } => {
+  console.log(error);
+  let result;
+  if (axios.isAxiosError(error)) {
+    interface Response {
+      message: string;
+    }
+    result = error.response?.data as Response;
+  }
+  if (error.special) {
+    result = { message: "Something went wrong, try again later" };
+  }
+  if (!result) {
+    result = { message: "An unexpected error occurred" };
+  }
+  return result;
+};
+
+export default authFetch;
