@@ -31,6 +31,12 @@ const generalUISlice = createSlice({
       state.alertType = action.payload.alertType;
       state.showAlert = action.payload.showAlert;
     },
+    invalidAction(state, action: { type: string; payload: string }) {
+      state.isLoading = false;
+      state.alertText = action.payload;
+      state.alertType = "danger";
+      state.showAlert = true;
+    },
   },
 });
 

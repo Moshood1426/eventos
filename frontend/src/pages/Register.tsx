@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar } from "../components";
 import { ReactComponent as Welcome } from "../assets/images/welcomeImg.svg";
 import FormItem from "../components/FormItem";
 import FormSelectItem from "../components/FormSelectItem";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useNavigate } from "react-router-dom";
+import { registerUser, loginUser } from "../store/auth/auth.actions";
+import { generalUIActions } from "../store/generalUI/generalUI.slice";
 
-const initialState = {
+const initialState: {
+  email: string;
+  password: string;
+  name: string;
+  role: "consumer" | "creator";
+  roleOptions: string[];
+} = {
   name: "",
-  role: "customer",
-  roleOptions: ["customer", "creator"],
+  role: "consumer",
+  roleOptions: ["consumer", "creator"],
   email: "",
   password: "",
 };
@@ -17,6 +27,18 @@ const Register = () => {
   const [forgotCredentials, setForgotCredentials] = useState(false);
   const [clientIsUser, setClientIsUser] = useState(false);
 
+  const { user } = useAppSelector((state) => state.auth);
+  const { invalidAction } = generalUIActions;
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user]);
+
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -25,7 +47,27 @@ const Register = () => {
     setFormData((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    const { name, role, email, password } = formData;
+    if (!email || !password) {
+      dispatch(invalidAction("Kindly input all necessary values"));
+      return;
+    }
+    if (!clientIsUser && (!name || !role)) {
+      dispatch(invalidAction("Kindly input all necessary values"));
+      return;
+    }
+
+    let userObj;
+    if (!clientIsUser) {
+      userObj = { name, role, email: email.toLowerCase(), password };
+      registerUser(userObj);
+    } else {
+      userObj = { email: email.toLowerCase(), password };
+      loginUser(userObj);
+    }
+  };
 
   return (
     <div>
