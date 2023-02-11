@@ -1,0 +1,60 @@
+.single_ticket {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  background-color: #ffdfdf;
+  padding: 1em 0.85em;
+  box-shadow: $shadow-1;
+  margin-bottom: 1.3rem;
+
+  h5 {
+    font-family: $AirBnBMedium;
+    font-weight: bold;
+    font-size: 1.35rem;
+    margin-bottom: 0.65rem;
+    color: $primary-500;
+  }
+
+  //   p {
+  //     margin: 0.35rem;
+  //   }
+
+  &_date {
+    font-size: $smallText;
+    color: $primary-500;
+    font-weight: bold;
+  }
+
+  &_venue {
+    margin-bottom: 0.5rem;
+  }
+
+  &_price {
+    font-size: $smallText;
+    color: $grey-500;
+  }
+
+  &_moderator {
+    font-family: "Francois One";
+    color: $grey-900;
+  }
+
+  &_imgDiv {
+    height: inherit;
+    // max-height: 200px;
+    max-width: 200px;
+    justify-content: flex-end;
+    align-self: stretch;
+    margin-left: auto;
+
+    img {
+      height: 100%;
+    }
+  }
+
+  @include media("<=miniDesktop") {
+    &_imgDiv {
+      display: none;
+    }
+  }
+}

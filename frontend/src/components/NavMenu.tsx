@@ -3,9 +3,10 @@ import { NavLink } from "react-router-dom";
 
 const NavMenu = () => {
   const actions = [
-    { id: 1, title: "Explore", to: "/explore" },
-    { id: 2, title: "Create quiz", to: "/create-quiz" },
-    { id: 3, title: "Manage quiz", to: "/" },
+    { id: 1, title: "Marketplace", to: "/explore" },
+    { id: 2, title: "Favorites", to: "/create-quiz" },
+    { id: 3, title: "Create Event", to: "/" },
+    { id: 3, title: "History", to: "/" },
   ];
 
   return (

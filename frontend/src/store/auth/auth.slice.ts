@@ -6,7 +6,7 @@ const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
 
 const initialState: AuthState = {
-  token: token ? JSON.parse(token) : null,
+  token: token ,
   user: user ? JSON.parse(user) : null,
 };
 
