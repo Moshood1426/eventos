@@ -6,7 +6,7 @@ const NavMenu = () => {
     { id: 1, title: "Marketplace", to: "/explore" },
     { id: 2, title: "Favorites", to: "/create-quiz" },
     { id: 3, title: "Create Event", to: "/" },
-    { id: 3, title: "History", to: "/" },
+    { id: 4, title: "History", to: "/" },
   ];
 
   return (

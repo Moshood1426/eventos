@@ -7,6 +7,7 @@ import {
   ProtectedRoute,
   Register,
   SharedLayout,
+  SingleTicketPage,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -33,6 +34,10 @@ function App() {
           }
         >
           <Route index element={<AllTickets />} />
+          <Route
+            path="/dashboard/singleTicket"
+            element={<SingleTicketPage />}
+          />
         </Route>
       </Routes>
     </Router>
