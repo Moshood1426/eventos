@@ -120,6 +120,7 @@ const Landing = () => {
           <span>Get the latest events from eventos</span>
         </div>
       </div>
+
       <div className="recent">
         <h4>Our Recent Events</h4>
         <div className="recent_events">
@@ -134,6 +135,7 @@ const Landing = () => {
           })}
         </div>
       </div>
+      
       <div className="category">
         <h4>Explore Category</h4>
         <div className="category_container">
