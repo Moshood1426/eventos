@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthEntity } from './auth/auth.entity';
+import { TicketModule } from './ticket/ticket.module';
+import { Ticket } from './ticket/ticket.entity';
 
 @Module({
   imports: [
@@ -16,8 +18,9 @@ import { AuthEntity } from './auth/auth.entity';
       password: 'Badmantons10',
       database: 'eventos',
       synchronize: true,
-      entities: [AuthEntity],
+      entities: [AuthEntity, Ticket],
     }),
+    TicketModule,
   ],
   controllers: [AppController],
   providers: [AppService],
