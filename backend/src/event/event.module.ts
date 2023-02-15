@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TicketController } from './ticket.controller';
-import { Ticket } from './ticket.entity';
-import { TicketService } from './ticket.service';
+import { EventController } from './event.controller';
+import { Event } from './event.entity';
+import { EventService } from './event.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { join } from 'path';
@@ -20,12 +20,12 @@ const fileStorage = diskStorage({
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Ticket]),
+    TypeOrmModule.forFeature([Event]),
     MulterModule.register({
       storage: fileStorage,
     }),
   ],
-  controllers: [TicketController],
-  providers: [TicketService],
+  controllers: [EventController],
+  providers: [EventService],
 })
-export class TicketModule {}
+export class EventModule {}

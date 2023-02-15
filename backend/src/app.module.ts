@@ -4,8 +4,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthEntity } from './auth/auth.entity';
-import { TicketModule } from './ticket/ticket.module';
-import { Ticket } from './ticket/ticket.entity';
+import { EventModule } from './event/event.module';
+import { Event } from './event/event.entity';
 import { SalesModule } from './sales/sales.module';
 
 @Module({
@@ -19,9 +19,9 @@ import { SalesModule } from './sales/sales.module';
       password: 'Badmantons10',
       database: 'eventos',
       synchronize: true,
-      entities: [AuthEntity, Ticket],
+      entities: [AuthEntity, Event],
     }),
-    TicketModule,
+    EventModule,
     SalesModule,
   ],
   controllers: [AppController],
