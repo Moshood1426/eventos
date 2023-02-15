@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthEntity } from './auth/auth.entity';
 import { TicketModule } from './ticket/ticket.module';
 import { Ticket } from './ticket/ticket.entity';
+import { SalesModule } from './sales/sales.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { Ticket } from './ticket/ticket.entity';
       entities: [AuthEntity, Ticket],
     }),
     TicketModule,
+    SalesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

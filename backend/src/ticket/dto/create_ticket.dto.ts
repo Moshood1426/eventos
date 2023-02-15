@@ -1,28 +1,5 @@
-import { IsNumber, IsString, Length } from 'class-validator';
-
-// @Column()
-// title: string;
-
-// @Column()
-// description: string;
-
-// @Column()
-// date: number;
-
-// @Column()
-// venue: string;
-
-// @Column()
-// location: string;
-
-// @Column()
-// price: number;
-
-// @Column()
-// host: string;
-
-// @Column()
-// img: string
+import { Type } from 'class-transformer';
+import { IsString, Length, IsInt, IsNumber } from 'class-validator';
 
 export class CreateTicketDto {
   @IsString()
@@ -33,7 +10,8 @@ export class CreateTicketDto {
   @IsString()
   description: string;
 
-  @IsNumber()
+  @IsInt()
+  @Type(() => Number)
   date: number;
 
   @IsString()
@@ -45,12 +23,10 @@ export class CreateTicketDto {
   location: string;
 
   @IsNumber()
+  @Type(() => Number)
   price: number;
 
   @IsString()
   @Length(3, 50)
   host: string;
-
-  @IsString()
-  img: string;
 }

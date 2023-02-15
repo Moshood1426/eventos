@@ -25,8 +25,8 @@ export class TicketController {
   @UseInterceptors(FileInterceptor('image'))
   createTicket(
     @CurrentUser() user: { userId: number },
+    @Body() body: CreateTicketDto,
     @UploadedFile() file: Express.Multer.File,
-    // @Body() body: CreateTicketDto,
   ) {
     if (!file.mimetype.startsWith('image')) {
       throw new BadRequestException('File needs to be an image');
@@ -36,7 +36,6 @@ export class TicketController {
       throw new BadRequestException('File should be less than 4MB');
     }
 
-    console.log(file)
-    return this.ticketService.create({ file, user });
+    return this.ticketService.create({ file, user, body });
   }
 }

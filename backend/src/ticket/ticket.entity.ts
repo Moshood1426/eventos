@@ -38,14 +38,14 @@ export class Ticket {
   @Column()
   location: string;
 
-  @Column()
+  @Column("decimal", { precision: 5, scale: 2 })
   price: number;
 
   @Column()
   host: string;
 
   @Column()
-  img: string
+  imgPath: string
 
   @ManyToOne(() => AuthEntity)
   createdBy: number

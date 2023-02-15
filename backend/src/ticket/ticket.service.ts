@@ -12,18 +12,29 @@ export class TicketService {
   ) {}
 
   async create(ctx: {
-    // body: CreateTicketDto;
+    body: CreateTicketDto;
     file: Express.Multer.File;
     user: { userId: number };
   }) {
-    const {  file, user } = ctx;
+    //solve issue of saving image on failed request
+    const { file, user, body } = ctx;
 
-    // const imagePath = path.join(
-    //   __dirname,
-    //   '../public/uploads/' + `${file.filename}`,
-    // );
+    const ticket = this.ticketRepo.create({
+      ...body,
+      imgPath: file.path,
+      createdBy: user.userId,
+    });
 
-    return {path: file.path}
-    //add img to images and get link
+    return this.ticketRepo.save(ticket);
   }
+
+  async getAll() {}
+
+  getSingleEvent() {}
+
+  getUserEvents() {}
+
+  editEvent() {}
+
+  deleteEvent() {}
 }
