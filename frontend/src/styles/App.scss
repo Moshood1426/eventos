@@ -162,13 +162,39 @@ img {
   }
 
   &_input,
-  &_select {
+  &_select,
+  &_btn {
     height: 45px;
+  }
+
+  &_text_area {
+    height: 100px;
+  }
+
+  &_file_input {
+    display: none;
+  }
+
+  &_file_label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid $primary-300;
+    padding: 10px;
+    color: $primary-600;
+    box-shadow: $shadow-1;
+    margin-bottom: 1.5rem;
   }
 }
 
 .form_input {
   box-shadow: $shadow-1;
+}
+
+.create_event_form {
+  margin-bottom: 4rem;
 }
 
 select {

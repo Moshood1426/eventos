@@ -122,7 +122,7 @@ const Register = () => {
             onChange={handleChange}
           />
           <div className="form_dual_row">
-            <button className="btn" type="submit">
+            <button className="btn form_btn" type="submit">
               Submit
             </button>
           </div>
