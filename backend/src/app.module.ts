@@ -7,6 +7,7 @@ import { AuthEntity } from './auth/auth.entity';
 import { EventModule } from './event/event.module';
 import { Event } from './event/event.entity';
 import { SalesModule } from './sales/sales.module';
+import { Sales } from './sales/sales.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { SalesModule } from './sales/sales.module';
       password: 'Badmantons10',
       database: 'eventos',
       synchronize: true,
-      entities: [AuthEntity, Event],
+      entities: [AuthEntity, Event, Sales],
     }),
     EventModule,
     SalesModule,

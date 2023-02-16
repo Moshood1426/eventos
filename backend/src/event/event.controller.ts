@@ -53,8 +53,7 @@ export class EventController {
   @AuthenticateUser()
   @Get('/user')
   getUserEvents(@CurrentUser() user: UserPayloadDto) {
-    const { userId } = user;
-    return this.eventService.getOne(userId);
+    return this.eventService.getUserEvents(user);
   }
 
   @Get('/:id')
