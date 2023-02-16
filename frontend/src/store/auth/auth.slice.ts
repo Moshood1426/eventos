@@ -6,8 +6,9 @@ const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
 
 const initialState: AuthState = {
-  token: token ,
+  token: token,
   user: user ? JSON.parse(user) : null,
+  clientIsUser: false,
 };
 
 const authSlice = createSlice({
@@ -16,11 +17,15 @@ const authSlice = createSlice({
   reducers: {
     login(state, action: LoginAction) {
       const user = {
-        email: action.payload.email,
+        name: action.payload.name,
+        role: action.payload.role,
         id: action.payload.id,
       };
       state.user = user;
       state.token = action.payload.token;
+    },
+    toggleClientIsUser(state, action: { type: string; payload: boolean }) {
+      state.clientIsUser = action.payload;
     },
   },
 });

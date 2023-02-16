@@ -167,6 +167,10 @@ img {
   }
 }
 
+.form_input {
+  box-shadow: $shadow-1;
+}
+
 select {
   color: red;
 }
@@ -182,11 +186,11 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px $primary-200 inset !important;
-  box-shadow: 0 0 0 30px $primary-200 inset !important;
+  box-shadow: $shadow-1 inset !important;
 }
 
 input:-webkit-autofill {
-  -webkit-text-fill-color: $grey-100 !important;
+  -webkit-text-fill-color: $primary-600 !important;
 }
 
 .nav_form_input {

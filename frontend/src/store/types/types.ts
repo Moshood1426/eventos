@@ -1,6 +1,7 @@
 export interface AuthState {
   user: User | null;
   token: string | null;
+  clientIsUser: boolean;
 }
 
 export interface DataFetchedAction {
@@ -15,7 +16,8 @@ export interface DataFetchedAction {
 export interface LoginAction {
   type: string;
   payload: {
-    email: string;
+    name: string;
+    role: "creator" | "consumer";
     id: number;
     token: string;
   };
@@ -33,6 +35,7 @@ export interface RegisterAction {
 }
 
 export interface User {
-  email: string;
+  role: "consumer" | "creator";
+  name: string;
   id: number;
 }

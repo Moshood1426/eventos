@@ -8,6 +8,11 @@ import {
   Register,
   SharedLayout,
   SingleTicketPage,
+  CreateEvent,
+  Favorites,
+  MyEvents,
+  MyTickets,
+  Profile,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -22,11 +27,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
         <Route path="/register" element={<Register />} />
 
         <Route
-          path="/dashboard"
+          path="/"
           element={
             <ProtectedRoute>
               <SharedLayout />
@@ -35,9 +40,14 @@ function App() {
         >
           <Route index element={<AllTickets />} />
           <Route
-            path="/dashboard/singleTicket"
+            path="marketplace/singleTicket"
             element={<SingleTicketPage />}
           />
+          <Route path="create-event" element={<CreateEvent />} />
+          <Route path="favorites" element={<Favorites />} />
+          <Route path="my-events" element={<MyEvents />} />
+          <Route path="my-tickets" element={<MyTickets />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

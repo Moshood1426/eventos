@@ -1,10 +1,14 @@
 import AllTickets from "./dashboard/AllTickets";
+import CreateEvent from "./dashboard/CreateEvent";
+import Favorites from "./dashboard/Favorites";
+import MyEvents from "./dashboard/MyEvents";
+import MyTickets from "./dashboard/MyTickets";
+import Profile from "./dashboard/Profile";
 import SharedLayout from "./dashboard/SharedLayout";
 import SingleTicketPage from "./dashboard/SingleTicketPage";
 import Landing from "./Landing";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
-
 export {
   Landing,
   Register,
@@ -12,4 +16,9 @@ export {
   AllTickets,
   SingleTicketPage,
   ProtectedRoute,
+  CreateEvent,
+  Favorites,
+  MyEvents,
+  MyTickets,
+  Profile,
 };

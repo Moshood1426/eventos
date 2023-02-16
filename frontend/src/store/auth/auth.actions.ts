@@ -17,17 +17,17 @@ const loginUser = (userInfo: { email: string; password: string }) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
-      const { data } = await axios.post<LoginUserResponse>(
-        "/api/v1/auth/login",
-        {
-          ...userInfo,
-        }
-      );
+      const { data } = await axios.post<LoginUserResponse>("/auth/login", {
+        ...userInfo,
+      });
 
       dispatch(generalUIActions.isLoadingCompleted());
       dispatch(authActions.login(data));
 
-      addUserToLocalStorage({ id: data.id, email: data.email }, data.token);
+      addUserToLocalStorage(
+        { id: data.id, role: data.role, name: data.name },
+        data.token
+      );
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
@@ -51,7 +51,10 @@ const registerUser = (userInfo: {
       dispatch(generalUIActions.isLoadingCompleted());
       dispatch(authActions.login(data));
 
-      addUserToLocalStorage({ id: data.id, email: data.email }, data.token);
+      addUserToLocalStorage(
+        { id: data.id, role: data.role, name: data.name },
+        data.token
+      );
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
@@ -64,4 +67,6 @@ const addUserToLocalStorage = (user: User, token: string) => {
   localStorage.setItem("token", token);
 };
 
-export { loginUser, registerUser };
+const { toggleClientIsUser } = authActions;
+
+export { loginUser, registerUser, toggleClientIsUser };
