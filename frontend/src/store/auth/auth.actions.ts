@@ -25,7 +25,7 @@ const loginUser = (userInfo: { email: string; password: string }) => {
       dispatch(authActions.login(data));
 
       addUserToLocalStorage(
-        { id: data.id, role: data.role, name: data.name },
+        { id: data.id, role: data.role, name: data.name, email: data.email },
         data.token
       );
     } catch (error) {
@@ -52,7 +52,7 @@ const registerUser = (userInfo: {
       dispatch(authActions.login(data));
 
       addUserToLocalStorage(
-        { id: data.id, role: data.role, name: data.name },
+        { id: data.id, role: data.role, name: data.name, email: data.email },
         data.token
       );
     } catch (error) {
@@ -60,6 +60,17 @@ const registerUser = (userInfo: {
       dispatch(invalidAction(result.message));
     }
   };
+};
+
+export const updateUser = (user: { email: string; name: string }) => {
+  return (dispatch: any) => {};
+};
+
+export const updateUserPassword = (user: {
+  oldPassword: string;
+  newPassword: string;
+}) => {
+  return (dispatch: any) => {};
 };
 
 const addUserToLocalStorage = (user: User, token: string) => {

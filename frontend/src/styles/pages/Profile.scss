@@ -1,0 +1,21 @@
+.profile {
+  margin-bottom: 3rem;
+  &_account {
+    background-color: #fcf4f4;
+    padding: 2em 2em 1em;
+    box-shadow: $shadow-1;
+    max-width: 600px;
+
+    &_form {
+      width: 100%;
+      margin-bottom: 3em;
+    }
+    &_title {
+      border-bottom: 1px solid $primary-300;
+      display: flex;
+      font-size: $smallText;
+      padding-bottom: 0.3rem;
+      margin-bottom: 1.5em;
+    }
+  }
+}

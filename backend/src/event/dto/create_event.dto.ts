@@ -10,9 +10,8 @@ export class CreateEventDto {
   @IsString()
   description: string;
 
-  @IsInt()
-  @Type(() => Number)
-  date: number;
+  @IsString()
+  date: string;
 
   @IsString()
   @Length(3, 50)

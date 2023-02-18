@@ -20,6 +20,7 @@ export interface LoginAction {
     role: "creator" | "consumer";
     id: number;
     token: string;
+    email: string;
   };
 }
 
@@ -36,6 +37,22 @@ export interface RegisterAction {
 
 export interface User {
   role: "consumer" | "creator";
+  email: string;
   name: string;
   id: number;
+}
+
+export interface EventInst {
+  id: number;
+  title: string;
+  description: string;
+  date: number;
+  venue: string;
+  location: string;
+  price: number;
+  host: string;
+  imgPath: string;
+  category: string;
+  capacity: number;
+  createdBy: number;
 }

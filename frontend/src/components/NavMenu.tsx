@@ -6,15 +6,15 @@ const NavMenu = () => {
   const consumerActions = [
     { id: 1, title: "Marketplace", to: "/" },
     { id: 2, title: "Favorites", to: "/favorites" },
-    { id: 4, title: "My Tickets", to: "/my-tickets" },
-    { id: 3, title: "Profile", to: "/profile" },
+    { id: 3, title: "My Tickets", to: "/my-tickets" },
+    { id: 4, title: "Profile", to: "/profile" },
   ];
 
   const creatorActions = [
     { id: 1, title: "Marketplace", to: "/" },
     { id: 2, title: "Create Event", to: "/create-event" },
     { id: 3, title: "My Events", to: "/my-events" },
-    { id: 3, title: "Profile", to: "/profile" },
+    { id: 4, title: "Profile", to: "/profile" },
   ];
 
   const { user } = useAppSelector((state) => state.auth);

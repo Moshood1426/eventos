@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { FormItem, FormSelectItem } from "../../components";
 import { ReactComponent as CreateEventSvg } from "../../assets/images/createEvent.svg";
 import { BsFillCameraFill } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { invalidAction } from "../../store/generalUI/generalUI.actions";
 import Alert from "../../components/Alert";
+import { createEvent } from "../../store/event/event.action";
 
 const initialState = {
   category: "",
@@ -33,6 +34,7 @@ const initialState = {
   location: "",
   price: "",
   capacity: "",
+  host: "",
   //add host on submission
 };
 
@@ -42,6 +44,8 @@ const CreateEvent = () => {
 
   const { showAlert } = useAppSelector((state) => state.generalUI);
   const dispatch = useAppDispatch();
+
+  const formRef = useRef(null);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -79,7 +83,11 @@ const CreateEvent = () => {
       return;
     }
 
-    
+    const formInfo = new FormData(formRef.current!);
+    formInfo.append("image", fileUploaded)
+    console.log(formData.date)
+    formInfo.append("date", "4")
+    dispatch(createEvent(formInfo as unknown as HTMLFormElement));
   };
 
   return (
@@ -92,7 +100,11 @@ const CreateEvent = () => {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
       </p>
-      <form className="form create_event_form" onSubmit={handleSubmit}>
+      <form
+        ref={formRef}
+        className="form create_event_form"
+        onSubmit={handleSubmit}
+      >
         {showAlert && <Alert />}
         <div className="form_dual_row">
           <FormSelectItem
@@ -118,12 +130,20 @@ const CreateEvent = () => {
         />
         <div className="form_row">
           <textarea
+            name="description"
             value={formData.description}
             onChange={handleChange}
             className="form_input form_text_area"
             placeholder="Enter event description"
           ></textarea>
         </div>
+        <FormItem
+          name="host"
+          type="text"
+          value={formData.host}
+          onChange={handleChange}
+          placeholder={"host agency"}
+        />
         <div className="form_dual_row">
           <FormItem
             name="venue"
@@ -133,16 +153,17 @@ const CreateEvent = () => {
             placeholder={"Event venue"}
           />
           <FormItem
-            name="title"
+            name="location"
             type="text"
             value={formData.location}
             onChange={handleChange}
             placeholder={"Location - City, State"}
           />
         </div>
+
         <div className="form_dual_row">
           <FormItem
-            name="venue"
+            name="price"
             type="number"
             value={formData.price}
             onChange={handleChange}

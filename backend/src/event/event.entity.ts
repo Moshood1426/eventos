@@ -13,7 +13,7 @@ export class Event {
   description: string;
 
   @Column()
-  date: number;
+  date: string;
 
   @Column()
   venue: string;

@@ -11,6 +11,9 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from './dto/login-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserPayloadDto } from './dto/user_payload.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -53,5 +56,55 @@ export class AuthService {
 
     const token = this.jwtService.sign({ id: user.id, role: user.role });
     return { ...user, token };
+  }
+
+  async updateUser(body: UpdateUserDto, user: UserPayloadDto) {
+    const userInfo = await this.authRepo.findOne({
+      where: { id: user.userId },
+    });
+
+    if (!userInfo) {
+      throw new NotFoundException('User with id cannot be found');
+    }
+
+    userInfo.email = body.email;
+    userInfo.name = body.name;
+
+    const userUpdated = await this.authRepo.save(userInfo);
+    const token = this.jwtService.sign({
+      id: userUpdated.id,
+      role: userUpdated.role,
+    });
+    return { ...userUpdated, token };
+  }
+
+  async updatePassword(body: UpdatePasswordDto, user: UserPayloadDto) {
+    const { oldPassword, newPassword } = body;
+    const userInfo = await this.authRepo.findOne({
+      where: { id: user.userId },
+    });
+    if (!userInfo) {
+      throw new NotFoundException('User with id cannot be found');
+    }
+    console.log(userInfo.password, oldPassword);
+    const confirmPassword = await bcrypt.compare(
+      oldPassword,
+      userInfo.password,
+    );
+    if (!confirmPassword) {
+      throw new BadRequestException('old password is incorrect');
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(newPassword, salt);
+    userInfo.password = password;
+
+    const userUpdated = await this.authRepo.save(userInfo);
+    const token = this.jwtService.sign({
+      id: userUpdated.id,
+      role: userUpdated.role,
+    });
+
+    return { ...userUpdated, token };
   }
 }

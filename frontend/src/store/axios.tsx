@@ -1,17 +1,16 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosInstance} from "axios";
 import store from ".";
 import { selectToken } from "./auth/auth.slice";
-
 // axios
 const authFetch = axios.create({
-  baseURL: "/api/v1",
+  baseURL: "",
 });
 // request
 const token = selectToken(store.getState());
 
 authFetch.interceptors.request.use(
-  (config) => {
-    config.headers.common["Authorization"] = `Bearer ${token}`;
+  (config) => {  
+    config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
   (error) => {
@@ -20,18 +19,18 @@ authFetch.interceptors.request.use(
 );
 // response
 
-authFetch.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    // console.log(error.response)
-    if (error.response.status === 401) {
-      //   logoutUser();
-    }
-    return Promise.reject(error);
-  }
-);
+// authFetch.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   (error) => {
+//     // console.log(error.response)
+//     if (error.response.status === 401) {
+//       //   logoutUser();
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export const handleAxiosError = (error: any): { message: string } => {
   console.log(error);
