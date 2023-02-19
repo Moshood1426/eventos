@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormItem, FormSelectItem } from "../../components";
 import Alert from "../../components/Alert";
+import { updateUser, updateUserPassword } from "../../store/auth/auth.actions";
 import { invalidAction } from "../../store/generalUI/generalUI.actions";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 
@@ -26,7 +27,7 @@ const Profile = () => {
       const { name, email, role } = user;
       setFormData((prevVal) => ({ ...prevVal, name, email, role }));
     }
-  }, []);
+  }, [user]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -42,7 +43,10 @@ const Profile = () => {
     const { name, email } = formData;
     if (!name || !email) {
       dispatch(invalidAction("Kindly fill all necessary details"));
+      return;
     }
+
+    dispatch(updateUser({ name, email }));
   };
 
   const handlePasswordSubmit = (event: React.FormEvent) => {
@@ -51,7 +55,10 @@ const Profile = () => {
 
     if (!oldPassword || !newPassword || !confirmNewPassword) {
       dispatch(invalidAction("Kindly fill all necessary details"));
+      return;
     }
+
+    dispatch(updateUserPassword({ oldPassword, newPassword }));
   };
 
   return (
@@ -119,7 +126,7 @@ const Profile = () => {
           />
           <div className="form_dual_row">
             <button className="btn form_btn" type="submit">
-              Update Profile
+              Update Password
             </button>
           </div>
         </form>

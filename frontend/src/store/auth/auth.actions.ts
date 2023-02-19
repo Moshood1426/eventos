@@ -1,7 +1,7 @@
 import { authActions } from "./auth.slice";
 import { generalUIActions } from "../generalUI/generalUI.slice";
 import axios from "axios";
-import { handleAxiosError } from "../axios";
+import authFetch, { handleAxiosError } from "../axios";
 import { User } from "../types/types";
 import { invalidAction } from "../generalUI/generalUI.actions";
 
@@ -13,6 +13,7 @@ interface LoginUserResponse {
   token: string;
 }
 
+//login user
 const loginUser = (userInfo: { email: string; password: string }) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
@@ -35,6 +36,7 @@ const loginUser = (userInfo: { email: string; password: string }) => {
   };
 };
 
+//register user
 const registerUser = (userInfo: {
   email: string;
   password: string;
@@ -62,15 +64,66 @@ const registerUser = (userInfo: {
   };
 };
 
-export const updateUser = (user: { email: string; name: string }) => {
-  return (dispatch: any) => {};
+//update user
+const updateUser = (userUpdate: { email: string; name: string }) => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    try {
+      const { data } = await authFetch.patch<LoginUserResponse>("/auth/update-user", {
+        ...userUpdate,
+      });
+
+      dispatch(generalUIActions.isLoadingCompleted("User profile updated"));
+      dispatch(authActions.login(data));
+
+      addUserToLocalStorage(
+        { id: data.id, role: data.role, name: data.name, email: data.email },
+        data.token
+      );
+
+      setTimeout(() => {
+        dispatch(generalUIActions.resetShowAlert());
+      }, 3000);
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+    }
+  };
 };
 
-export const updateUserPassword = (user: {
+//update user password
+const updateUserPassword = (userPasswords: {
   oldPassword: string;
   newPassword: string;
 }) => {
-  return (dispatch: any) => {};
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    try {
+      const { data } = await authFetch.patch<LoginUserResponse>(
+        "/auth/update-password",
+        {
+          ...userPasswords,
+        }
+      );
+
+      dispatch(
+        generalUIActions.isLoadingCompleted("User password succesfully updated")
+      );
+      dispatch(authActions.login(data));
+
+      addUserToLocalStorage(
+        { id: data.id, role: data.role, name: data.name, email: data.email },
+        data.token
+      );
+
+      setTimeout(() => {
+        dispatch(generalUIActions.resetShowAlert());
+      }, 3000);
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+    }
+  };
 };
 
 const addUserToLocalStorage = (user: User, token: string) => {
@@ -80,4 +133,10 @@ const addUserToLocalStorage = (user: User, token: string) => {
 
 const { toggleClientIsUser } = authActions;
 
-export { loginUser, registerUser, toggleClientIsUser };
+export {
+  loginUser,
+  registerUser,
+  toggleClientIsUser,
+  updateUser,
+  updateUserPassword,
+};

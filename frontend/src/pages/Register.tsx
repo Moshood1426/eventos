@@ -39,7 +39,7 @@ const Register = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/marketplace");
+      navigate("/");
     }
   }, [user]);
 

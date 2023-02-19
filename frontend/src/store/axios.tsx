@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig, AxiosInstance} from "axios";
+import axios from "axios";
 import store from ".";
 import { selectToken } from "./auth/auth.slice";
 // axios
@@ -9,7 +9,7 @@ const authFetch = axios.create({
 const token = selectToken(store.getState());
 
 authFetch.interceptors.request.use(
-  (config) => {  
+  (config) => {
     config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
@@ -47,7 +47,7 @@ export const handleAxiosError = (error: any): { message: string } => {
   if (!result) {
     result = { message: "An unexpected error occurred" };
   }
-  console.log(result)
+  console.log(result);
   return result;
 };
 

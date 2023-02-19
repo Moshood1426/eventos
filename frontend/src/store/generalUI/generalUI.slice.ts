@@ -22,8 +22,13 @@ const generalUISlice = createSlice({
     isLoadingStarts(state) {
       state.isLoading = true;
     },
-    isLoadingCompleted(state) {
+    isLoadingCompleted(state, action: { type: string; payload: string | undefined}) {
       state.isLoading = false;
+      if (action.payload) {
+        state.alertText = action.payload;
+        state.alertType = "success";
+        state.showAlert = true;
+      }
     },
     invalidAction(state, action: { type: string; payload: string }) {
       state.isLoading = false;

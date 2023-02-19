@@ -46,13 +46,13 @@ export interface EventInst {
   id: number;
   title: string;
   description: string;
-  date: number;
+  date: string;
   venue: string;
   location: string;
-  price: number;
+  price: number | null;
   host: string;
   imgPath: string;
   category: string;
-  capacity: number;
-  createdBy: number;
+  capacity: number | null;
+  createdBy: number | null;
 }

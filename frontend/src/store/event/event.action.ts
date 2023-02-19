@@ -4,19 +4,33 @@ import axios from "axios";
 import authFetch, { handleAxiosError } from "../axios";
 import { EventInst } from "../types/types";
 import { invalidAction } from "../generalUI/generalUI.actions";
+import { selectUser } from "../auth/auth.slice";
+import store from "..";
 
 export const createEvent = (formData: HTMLFormElement) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
       const { data } = await authFetch.post<EventInst>("/event", formData);
-      console.log(data);
+
+      if (!data.createdBy) {
+        data.createdBy = selectUser(store.getState())!.id;
+      }
 
       dispatch(generalUIActions.isLoadingCompleted());
+      dispatch(eventActions.addSingleEvent(data));
+
+      localStorage.setItem("lastSingleEventId", JSON.stringify(data.id));
     } catch (error) {
-      console.log(error);
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
     }
   };
 };
+
+
+export const getSingleEvent = (eventId: number) => {
+    return async (dispatch: any) => {
+        
+    }
+}

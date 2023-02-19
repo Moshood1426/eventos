@@ -7,7 +7,7 @@ import {
   ProtectedRoute,
   Register,
   SharedLayout,
-  SingleTicketPage,
+  SingleEventPage,
   CreateEvent,
   Favorites,
   MyEvents,
@@ -40,8 +40,8 @@ function App() {
         >
           <Route index element={<AllTickets />} />
           <Route
-            path="marketplace/singleTicket"
-            element={<SingleTicketPage />}
+            path="single-event"
+            element={<SingleEventPage />}
           />
           <Route path="create-event" element={<CreateEvent />} />
           <Route path="favorites" element={<Favorites />} />

@@ -5,7 +5,7 @@ import MyEvents from "./dashboard/MyEvents";
 import MyTickets from "./dashboard/MyTickets";
 import Profile from "./dashboard/Profile";
 import SharedLayout from "./dashboard/SharedLayout";
-import SingleTicketPage from "./dashboard/SingleTicketPage";
+import SingleEventPage from "./dashboard/SingleEventPage";
 import Landing from "./Landing";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
@@ -14,7 +14,7 @@ export {
   Register,
   SharedLayout,
   AllTickets,
-  SingleTicketPage,
+  SingleEventPage,
   ProtectedRoute,
   CreateEvent,
   Favorites,

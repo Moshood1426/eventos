@@ -26,7 +26,7 @@ export class EventService {
   }) {
     //solve issue of saving image on failed request
     const { file, user, body } = ctx;
-
+    console.log(user)
     if (user.role !== 'creator') {
       throw new UnauthorizedException('user cannot create event');
     }

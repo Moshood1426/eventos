@@ -67,6 +67,16 @@ export class AuthService {
       throw new NotFoundException('User with id cannot be found');
     }
 
+    if (body.email !== userInfo.email) {
+      const userExists = await this.authRepo.findOne({
+        where: { email: body.email },
+      });
+
+      if (userExists) {
+        throw new BadRequestException('User with email exists');
+      }
+    }
+
     userInfo.email = body.email;
     userInfo.name = body.name;
 

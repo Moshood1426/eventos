@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { invalidAction } from "../../store/generalUI/generalUI.actions";
 import Alert from "../../components/Alert";
 import { createEvent } from "../../store/event/event.action";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   category: "",
@@ -47,6 +49,8 @@ const CreateEvent = () => {
 
   const formRef = useRef(null);
 
+  const navigate = useNavigate()
+
   const handleChange = (
     event: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -84,10 +88,13 @@ const CreateEvent = () => {
     }
 
     const formInfo = new FormData(formRef.current!);
-    formInfo.append("image", fileUploaded)
-    console.log(formData.date)
-    formInfo.append("date", "4")
-    dispatch(createEvent(formInfo as unknown as HTMLFormElement));
+    formInfo.append("image", fileUploaded);
+    const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
+    formInfo.set("date", date);
+    try {
+      dispatch(createEvent(formInfo as unknown as HTMLFormElement));
+      navigate("/single-event")
+    } catch (error) {}
   };
 
   return (

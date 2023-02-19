@@ -1,27 +1,14 @@
 import React, { useEffect } from "react";
-import { SingleRecentEvent } from "../../components";
+import { Loading, SingleRecentEvent } from "../../components";
 import recent1 from "../../assets/images/recent1.jpg";
 import Recent1 from "../../assets/images/recent1.jpg";
 import Recent2 from "../../assets/images/recent2.jpg";
 import Recent3 from "../../assets/images/recent3.jpg";
+import { useAppSelector } from "../../store/hooks";
 
-const SingleTicketPage = () => {
-  const ticketData = {
-    id: 2,
-    title: "The Sweet Spot Borlesque",
-    date: "Fri, Feb 3. 7:00pm",
-    venue: "Old Trafford Stadium",
-    location: "England, LA",
-    price: {
-      category1: 36,
-    },
-    moderator: "The Manchester United Grp",
-    description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-      sed do eiusmod tempor incididunt ut labore et dolore magna
-       aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing 
-       elit, sed do eiusmod tempor incididunt ut labore et dolore 
-       magna aliqua.`,
-  };
+const SingleEventPage = () => {
+
+  const { singleEvent } = useAppSelector((state) => state.event)
 
   const recentEventData = [
     {
@@ -43,19 +30,24 @@ const SingleTicketPage = () => {
       img: Recent3,
     },
   ];
+
   useEffect(() => {}, []);
+
+  if(!singleEvent.id) {
+    return <Loading />
+  }
 
   return (
     <div className="single_ticketPg">
       <div className="single_ticketPg_header">
         <div>
-          <h4 className="single_ticketPg_title">{ticketData.title}</h4>
-          <p className="single_ticketPg_date">{ticketData.date}</p>
+          <h4 className="single_ticketPg_title">{singleEvent.title}</h4>
+          <p className="single_ticketPg_date">{singleEvent.date}</p>
         </div>
 
         <div className="single_ticketPg_price">
           <span className="single_ticketPg_amt">
-            ${ticketData.price.category1}/ticket
+            ${singleEvent.price}/ticket
           </span>
           <span className="single_ticketPg_price_action">Get Ticket</span>
         </div>
@@ -64,20 +56,20 @@ const SingleTicketPage = () => {
       <div className="single_ticketPg_content">
         <div className="single_ticketPg_description">
           <span className="single_ticketPg_subTitle">Description</span>
-          <p>{ticketData.description}</p>
+          <p>{singleEvent.description}</p>
         </div>
 
         <div className="single_ticketPg_location">
           <span className="single_ticketPg_subTitle">Location</span>
           <p className="single_ticketPg_venue">
             {" "}
-            {ticketData.venue} - {ticketData.location}
+            {singleEvent.venue} - {singleEvent.location}
           </p>
         </div>
       </div>
 
       <div className="single_ticketPg_imgDiv">
-        <img src={recent1} alt="" />
+        <img src={singleEvent.imgPath} alt="" />
       </div>
 
       <div className="single_ticketPg_recent recent">
@@ -114,4 +106,4 @@ const SingleTicketPage = () => {
   );
 };
 
-export default SingleTicketPage;
+export default SingleEventPage;
