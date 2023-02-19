@@ -1,5 +1,12 @@
 import { Length } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Event } from 'src/event/event.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+} from 'typeorm';
 
 @Entity()
 export class AuthEntity {
@@ -21,4 +28,8 @@ export class AuthEntity {
 
   @Column()
   password: string;
+
+  @ManyToMany(() => Event)
+  @JoinTable()
+  favEvents: Event[];
 }

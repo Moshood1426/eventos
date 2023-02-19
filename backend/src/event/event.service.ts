@@ -26,7 +26,7 @@ export class EventService {
   }) {
     //solve issue of saving image on failed request
     const { file, user, body } = ctx;
-    console.log(user)
+    console.log(user);
     if (user.role !== 'creator') {
       throw new UnauthorizedException('user cannot create event');
     }
@@ -41,8 +41,10 @@ export class EventService {
   }
 
   //get all events
-  async getAll(query: GetEventQueryDto) {
+  async getAll(query: Partial<GetEventQueryDto>) {
     const { price, category, date, location } = query;
+
+    return this.eventRepo.find();
   }
 
   //get single event
@@ -60,7 +62,7 @@ export class EventService {
   }
 
   //get single user events
-  async getUserEvents({role, userId}) {
+  async getUserEvents({ role, userId }) {
     if (role !== 'creator') {
       throw new UnauthorizedException('user not allowed to access this route');
     }
@@ -76,7 +78,7 @@ export class EventService {
 
     return events;
   }
-  
+
   //update user events
   async update(ctx: {
     eventId: number;

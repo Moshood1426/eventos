@@ -21,10 +21,15 @@ import { EventService } from './event.service';
 import { Express } from 'express';
 import { UserPayloadDto } from 'src/auth/dto/user_payload.dto';
 import { GetEventQueryDto } from './dto/get_event_query.dto';
+import { AuthService } from 'src/auth/auth.service';
+import { FavDto } from './dto/fav-event.dto';
 
 @Controller('api/v1/event')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(
+    private readonly eventService: EventService,
+    private readonly authService: AuthService,
+  ) {}
 
   @AuthenticateUser()
   @Post('')
@@ -46,7 +51,7 @@ export class EventController {
   }
 
   @Get('')
-  getAllEvents(@Query() query: GetEventQueryDto) {
+  getAllEvents(@Query() query: Partial<GetEventQueryDto>) {
     return this.eventService.getAll(query);
   }
 
@@ -54,6 +59,27 @@ export class EventController {
   @Get('/user')
   getUserEvents(@CurrentUser() user: UserPayloadDto) {
     return this.eventService.getUserEvents(user);
+  }
+
+  
+  @AuthenticateUser()
+  @Patch('/add-to-fav')
+  async addEventToFav(
+    @Body() body: FavDto,
+    @CurrentUser() user: UserPayloadDto,
+  ) {
+    const event = await this.eventService.getOne(body.eventId);
+
+    return this.authService.addEventToFav(event, user.userId);
+  }
+
+  @AuthenticateUser()
+  @Patch('/remove-from-fav')
+  async removeEventFromFav(
+    @Body() body: FavDto,
+    @CurrentUser() user: UserPayloadDto,
+  ) {
+    return this.authService.removeEventFromFav(body.eventId, user.userId);
   }
 
   @Get('/:id')

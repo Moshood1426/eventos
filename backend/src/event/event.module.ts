@@ -6,6 +6,8 @@ import { EventService } from './event.service';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { join } from 'path';
+import { AuthService } from 'src/auth/auth.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 const imgPath = join(__dirname, '../../public/uploads');
 
@@ -24,6 +26,7 @@ const fileStorage = diskStorage({
     MulterModule.register({
       storage: fileStorage,
     }),
+    AuthModule
   ],
   controllers: [EventController],
   providers: [EventService],

@@ -49,7 +49,7 @@ const CreateEvent = () => {
 
   const formRef = useRef(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -69,7 +69,7 @@ const CreateEvent = () => {
     setImageName(event.target.files[0].name);
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     //@ts-ignore
     for (let item in formData) {
@@ -92,8 +92,8 @@ const CreateEvent = () => {
     const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
     formInfo.set("date", date);
     try {
-      dispatch(createEvent(formInfo as unknown as HTMLFormElement));
-      navigate("/single-event")
+      await dispatch(createEvent(formInfo as unknown as HTMLFormElement));
+      navigate("/single-event");
     } catch (error) {}
   };
 
