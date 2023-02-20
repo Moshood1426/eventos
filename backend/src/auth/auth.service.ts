@@ -122,21 +122,21 @@ export class AuthService {
   async addEventToFav(event: Event, userId: number) {
     const user = await this.authRepo.findOne({
       where: { id: userId },
-      loadRelationIds: true,
+      loadRelationIds: true
     });
-    console.log(typeof user.favEvents);
-    console.log(user.favEvents);
-    if (user.favEvents.length > 0) {
-      const eventIsFav = user.favEvents.find((item) => item.id === event.id);
-      if (eventIsFav) {
-        throw new BadRequestException('event has been added as favorite');
-      }
-      user.favEvents = [...user.favEvents, event];
-    } else {
-      user.favEvents = [event];
-    }
+    
+    // if (user.favEvents.length > 0) {
 
-    return this.authRepo.save(user);
+    //   const eventIsFav = user.favEvents.find((item) => item === event.id);
+    //   if (eventIsFav) {
+    //     throw new BadRequestException('event has been added as favorite');
+    //   }
+    //   user.favEvents = [...user.favEvents, event];
+    // } else {
+    //   user.favEvents = [event];
+    // }
+
+    return user;
   }
 
   async removeEventFromFav(eventId: number, userId: number) {

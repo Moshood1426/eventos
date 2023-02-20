@@ -1,43 +1,31 @@
-import React from "react";
-import { SingleTicket } from "../../components";
+import React, { useEffect } from "react";
+import { Loading, SingleTicket } from "../../components";
 import Recent1 from "../../assets/images/recent1.jpg";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { getAllEvents } from "../../store/event/event.action";
 
 const AllTickets = () => {
-  const ticketsData = [
-    {
-      id: 1,
-      title: "The Sweet Spot Borlesque",
-      date: "Fri, Feb 3. 7:00pm",
-      venue: "Old Trafford Stadium",
-      location: "England, LA",
-      price: {
-        category1: 36,
-      },
-      moderator: "The Manchester United Grp",
-    },
-    {
-      id: 2,
-      title: "The Sweet Spot Borlesque",
-      date: "Fri, Feb 3. 7:00pm",
-      venue: "Old Trafford Stadium",
-      location: "England, LA",
-      price: {
-        category1: 36,
-      },
-      moderator: "The Manchester United Grp",
-    },
-    {
-      id: 3,
-      title: "The Sweet Spot Borlesque",
-      date: "Fri, Feb 3. 7:00pm",
-      venue: "Old Trafford Stadium",
-      location: "England, LA",
-      price: {
-        category1: 36,
-      },
-      moderator: "The Manchester United Grp",
-    },
-  ];
+  const dispatch = useAppDispatch();
+  const { allEvents } = useAppSelector((state) => state.event);
+  const { isLoading } = useAppSelector((state) => state.generalUI);
+
+  useEffect(() => {
+    dispatch(getAllEvents());
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (allEvents.length < 1) {
+    return (
+      <div>
+        <h4 className="tickets_header">Explore Tickets</h4>
+        <span>No tickets available for purchase right now</span>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h4 className="tickets_header">Explore Tickets</h4>
@@ -47,13 +35,13 @@ const AllTickets = () => {
         </div>
         <div className="tickets_content">
           <div>
-            {ticketsData.map((item, index) => {
+            {allEvents.map((item, index) => {
               return (
                 <SingleTicket
                   key={item.id}
                   {...item}
+                  price={item.price!}
                   number={index + 1}
-                  img={Recent1}
                 />
               );
             })}

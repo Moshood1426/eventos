@@ -91,10 +91,11 @@ const CreateEvent = () => {
     formInfo.append("image", fileUploaded);
     const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
     formInfo.set("date", date);
-    try {
-      await dispatch(createEvent(formInfo as unknown as HTMLFormElement));
-      navigate("/single-event");
-    } catch (error) {}
+
+    const res = await dispatch(createEvent(formInfo as unknown as HTMLFormElement))
+    if(res) {
+      navigate("/single-event")
+    }
   };
 
   return (

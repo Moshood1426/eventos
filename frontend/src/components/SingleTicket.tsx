@@ -1,4 +1,5 @@
 import React from "react";
+import { useAppSelector } from "../store/hooks";
 
 interface SingleTicketProps {
   number: number;
@@ -6,12 +7,14 @@ interface SingleTicketProps {
   date: string;
   venue: string;
   location: string;
-  price: { category1: number };
-  moderator: string;
-  img: any;
+  price: number;
+  host: string;
+  imgPath: any;
 }
 
 const SingleTicket: React.FC<SingleTicketProps> = (props) => {
+  const { user } = useAppSelector((state) => state.auth);
+
   return (
     <div className="single_ticket">
       <h5 className="single_ticket_number">{props.number}.</h5>
@@ -21,13 +24,13 @@ const SingleTicket: React.FC<SingleTicketProps> = (props) => {
         <p className="single_ticket_venue">
           {props.venue} - {props.location}
         </p>
-        <p className="single_ticket_price">
-          Starts from ${props.price.category1}
-        </p>
-        <p className="single_ticket_moderator">{props.moderator}</p>
+        <p className="single_ticket_price">Starts from ${props.price}</p>
+        <div>
+          {}
+        </div>
       </div>
       <div className="single_ticket_imgDiv">
-        <img src={props.img} alt={props.title} />
+        <img src={props.imgPath} alt={props.title} />
       </div>
     </div>
   );

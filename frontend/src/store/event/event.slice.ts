@@ -3,6 +3,7 @@ import { EventInst } from "../types/types";
 
 interface InitialState {
   singleEvent: EventInst;
+  allEvents: EventInst[]
 }
 
 const initialState: InitialState = {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
     capacity: null,
     createdBy: null,
   },
+  allEvents: []
 };
 
 const eventSlice = createSlice({
@@ -29,6 +31,9 @@ const eventSlice = createSlice({
     addSingleEvent(state, action: { type: any; payload: EventInst }) {
       state.singleEvent = action.payload;
     },
+    getAllEvents(state, action: {type: string, payload: EventInst[]}) {
+      state.allEvents = action.payload
+    }
   },
 });
 

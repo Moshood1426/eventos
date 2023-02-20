@@ -21,6 +21,23 @@ export const createEvent = (formData: HTMLFormElement) => {
       dispatch(eventActions.addSingleEvent(data));
 
       localStorage.setItem("lastSingleEventId", JSON.stringify(data.id));
+      return true;
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+      return false;
+    }
+  };
+};
+
+export const getAllEvents = () => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    try {
+      const { data } = await authFetch.get<EventInst[]>("/event");
+
+      dispatch(eventActions.getAllEvents(data));
+      dispatch(generalUIActions.isLoadingCompleted());
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
@@ -28,9 +45,6 @@ export const createEvent = (formData: HTMLFormElement) => {
   };
 };
 
-
 export const getSingleEvent = (eventId: number) => {
-    return async (dispatch: any) => {
-        
-    }
-}
+  return async (dispatch: any) => {};
+};

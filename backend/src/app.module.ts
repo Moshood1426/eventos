@@ -8,6 +8,7 @@ import { EventModule } from './event/event.module';
 import { Event } from './event/event.entity';
 import { SalesModule } from './sales/sales.module';
 import { Sales } from './sales/sales.entity';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { Sales } from './sales/sales.entity';
     }),
     EventModule,
     SalesModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

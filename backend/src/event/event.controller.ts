@@ -61,7 +61,6 @@ export class EventController {
     return this.eventService.getUserEvents(user);
   }
 
-  
   @AuthenticateUser()
   @Patch('/add-to-fav')
   async addEventToFav(
