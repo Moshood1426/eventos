@@ -13,6 +13,10 @@ export class GetEventQueryDto {
   @Type(() => Number)
   date: number;
 
+  @IsNumber()
+  @Type(() => Number)
+  userId: number;
+
   @IsString()
   location: string;
 }

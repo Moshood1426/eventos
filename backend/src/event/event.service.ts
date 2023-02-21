@@ -42,9 +42,32 @@ export class EventService {
 
   //get all events
   async getAll(query: Partial<GetEventQueryDto>) {
-    const { price, category, date, location } = query;
+    const { price, category, date, location, userId } = query;
 
-    return this.eventRepo.find();
+    let result;
+
+    if (userId) {
+      const events = await this.eventRepo.find({
+        loadRelationIds: true,
+      });
+
+      result = events.map((item) => {
+        //@ts-ignore
+        if (item.isFavsOf.includes(+userId)) {
+          //@ts-ignore
+          item.isFavorite = true;
+        } else {
+          //@ts-ignore
+          item.isFavorite = false;
+        }
+        delete item.isFavsOf
+        return item;
+      });
+    } else {
+      result = this.eventRepo.find();
+    }
+
+    return result;
   }
 
   //get single event
