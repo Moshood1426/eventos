@@ -51,7 +51,6 @@ export class EventService {
   async getOne(eventId: number) {
     const event = await this.eventRepo.findOne({
       where: { id: eventId },
-      loadRelationIds: true,
     });
 
     if (!event) {

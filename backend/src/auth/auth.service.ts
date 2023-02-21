@@ -15,6 +15,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserPayloadDto } from './dto/user_payload.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 import { Event } from 'src/event/event.entity';
+import { FavoritesService } from 'src/favorites/favorites.service';
 
 @Injectable()
 export class AuthService {
@@ -117,36 +118,5 @@ export class AuthService {
     });
 
     return { ...userUpdated, token };
-  }
-
-  async addEventToFav(event: Event, userId: number) {
-    const user = await this.authRepo.findOne({
-      where: { id: userId },
-      loadRelationIds: true
-    });
-    
-    // if (user.favEvents.length > 0) {
-
-    //   const eventIsFav = user.favEvents.find((item) => item === event.id);
-    //   if (eventIsFav) {
-    //     throw new BadRequestException('event has been added as favorite');
-    //   }
-    //   user.favEvents = [...user.favEvents, event];
-    // } else {
-    //   user.favEvents = [event];
-    // }
-
-    return user;
-  }
-
-  async removeEventFromFav(eventId: number, userId: number) {
-    const user = await this.authRepo.findOne({ where: { id: userId } });
-    const eventIsFav = user.favEvents.find((item) => item.id === eventId);
-    if (!eventIsFav) {
-      throw new BadRequestException('event was never a favorite');
-    }
-
-    user.favEvents = user.favEvents.filter((item) => item.id !== eventId);
-    return this.authRepo.save(user);
   }
 }

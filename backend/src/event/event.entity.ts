@@ -1,5 +1,13 @@
 import { AuthEntity } from 'src/auth/auth.entity';
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Favorites } from 'src/favorites/favorites.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Event {
@@ -59,4 +67,7 @@ export class Event {
   @ManyToOne(() => AuthEntity)
   @JoinColumn()
   createdBy: number;
+
+  @ManyToMany(() => Favorites, favs => favs.eventIds)
+  isFavsOf: Favorites[]
 }

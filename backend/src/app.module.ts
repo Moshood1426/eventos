@@ -9,6 +9,7 @@ import { Event } from './event/event.entity';
 import { SalesModule } from './sales/sales.module';
 import { Sales } from './sales/sales.entity';
 import { FavoritesModule } from './favorites/favorites.module';
+import { Favorites } from './favorites/favorites.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { FavoritesModule } from './favorites/favorites.module';
       password: 'Badmantons10',
       database: 'eventos',
       synchronize: true,
-      entities: [AuthEntity, Event, Sales],
+      entities: [AuthEntity, Event, Sales, Favorites],
     }),
     EventModule,
     SalesModule,

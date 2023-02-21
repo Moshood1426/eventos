@@ -8,6 +8,7 @@ import { diskStorage } from 'multer';
 import { join } from 'path';
 import { AuthService } from 'src/auth/auth.service';
 import { AuthModule } from 'src/auth/auth.module';
+import { FavoritesModule } from 'src/favorites/favorites.module';
 
 const imgPath = join(__dirname, '../../public/uploads');
 
@@ -26,7 +27,8 @@ const fileStorage = diskStorage({
     MulterModule.register({
       storage: fileStorage,
     }),
-    AuthModule
+    AuthModule,
+    FavoritesModule
   ],
   controllers: [EventController],
   providers: [EventService],

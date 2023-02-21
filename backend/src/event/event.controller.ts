@@ -23,12 +23,14 @@ import { UserPayloadDto } from 'src/auth/dto/user_payload.dto';
 import { GetEventQueryDto } from './dto/get_event_query.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { FavDto } from './dto/fav-event.dto';
+import { FavoritesService } from 'src/favorites/favorites.service';
 
 @Controller('api/v1/event')
 export class EventController {
   constructor(
     private readonly eventService: EventService,
     private readonly authService: AuthService,
+    private readonly favService: FavoritesService,
   ) {}
 
   @AuthenticateUser()
@@ -67,9 +69,10 @@ export class EventController {
     @Body() body: FavDto,
     @CurrentUser() user: UserPayloadDto,
   ) {
+    console.log('started')
     const event = await this.eventService.getOne(body.eventId);
-
-    return this.authService.addEventToFav(event, user.userId);
+    console.log("event gotten")
+    return this.favService.addEventToFav(event, user.userId);
   }
 
   @AuthenticateUser()
@@ -78,7 +81,9 @@ export class EventController {
     @Body() body: FavDto,
     @CurrentUser() user: UserPayloadDto,
   ) {
-    return this.authService.removeEventFromFav(body.eventId, user.userId);
+    const event = await this.eventService.getOne(body.eventId);
+    return this.favService.removeEventFromFav(body.eventId, user.userId)
+    // return this.authService.removeEventFromFav(body.eventId, user.userId);
   }
 
   @Get('/:id')

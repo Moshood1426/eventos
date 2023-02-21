@@ -1,11 +1,13 @@
 import { Length } from 'class-validator';
 import { Event } from 'src/event/event.entity';
+import { Favorites } from 'src/favorites/favorites.entity';
 import {
   Column,
   Entity,
   JoinTable,
   PrimaryGeneratedColumn,
   ManyToMany,
+  OneToOne,
 } from 'typeorm';
 
 @Entity()
@@ -29,7 +31,7 @@ export class AuthEntity {
   @Column()
   password: string;
 
-  @ManyToMany(() => Event)
+  @OneToOne(() => Favorites, (favs) => favs.user)
   @JoinTable()
-  favEvents: Event[];
+  userFavs: Favorites;
 }
