@@ -69,9 +69,9 @@ export class EventController {
     @Body() body: FavDto,
     @CurrentUser() user: UserPayloadDto,
   ) {
-    console.log('started')
+    console.log('started');
     const event = await this.eventService.getOne(body.eventId);
-    console.log("event gotten")
+    console.log('event gotten');
     return this.favService.addEventToFav(event, user.userId);
   }
 
@@ -82,8 +82,14 @@ export class EventController {
     @CurrentUser() user: UserPayloadDto,
   ) {
     const event = await this.eventService.getOne(body.eventId);
-    return this.favService.removeEventFromFav(body.eventId, user.userId)
+    return this.favService.removeEventFromFav(body.eventId, user.userId);
     // return this.authService.removeEventFromFav(body.eventId, user.userId);
+  }
+
+  @AuthenticateUser()
+  @Get('/get-fav-events')
+  async getUserFavEvents(@CurrentUser() user: UserPayloadDto) {
+    return this.favService.getUserFavEvents(user.userId)
   }
 
   @Get('/:id')

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Event } from 'src/event/event.entity';
 import { Repository } from 'typeorm';
@@ -11,10 +15,15 @@ export class FavoritesService {
     private readonly favRepo: Repository<Favorites>,
   ) {}
 
-  async getUserEvents(userId: number) {
+  async getUserFavEvents(userId: number) {
     const userEvents = await this.favRepo.findOne({
       where: { userId: userId },
+      loadRelationIds: true
     });
+
+    if (!userEvents || !userEvents.eventIds) {
+      throw new NotFoundException('User has no favorites events');
+    }
 
     return userEvents.eventIds;
   }
@@ -64,7 +73,7 @@ export class FavoritesService {
       }
 
       user.eventIds = user.eventIds.filter((item) => item.id !== eventId);
-      
+
       await this.favRepo.save(user);
       return user.eventIds;
     } else {
