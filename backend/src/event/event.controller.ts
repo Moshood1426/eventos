@@ -53,8 +53,9 @@ export class EventController {
   }
 
   @Get('')
-  getAllEvents(@Query() query: Partial<GetEventQueryDto>) {
-    return this.eventService.getAll(query);
+  async getAllEvents(@Query() query: Partial<GetEventQueryDto>) {
+    const favId = await this.favService.getUserFavId(+query.userId);
+    return this.eventService.getAll(query, favId);
   }
 
   @AuthenticateUser()
@@ -69,9 +70,8 @@ export class EventController {
     @Body() body: FavDto,
     @CurrentUser() user: UserPayloadDto,
   ) {
-    console.log('started');
     const event = await this.eventService.getOne(body.eventId);
-    console.log('event gotten');
+
     return this.favService.addEventToFav(event, user.userId);
   }
 
@@ -89,7 +89,7 @@ export class EventController {
   @AuthenticateUser()
   @Get('/get-fav-events')
   async getUserFavEvents(@CurrentUser() user: UserPayloadDto) {
-    return this.favService.getUserFavEvents(user.userId)
+    return this.favService.getUserFavEvents(user.userId);
   }
 
   @Get('/:id')

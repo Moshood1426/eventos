@@ -55,4 +55,5 @@ export interface EventInst {
   category: string;
   capacity: number | null;
   createdBy: number | null;
+  isFavorite?: boolean;
 }

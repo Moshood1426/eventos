@@ -3,7 +3,7 @@
   flex-direction: row;
   gap: 1.5rem;
   background-color: #ffdfdf;
-  padding: 1em 0.85em;
+  padding: 1.2em 0.95em;
   box-shadow: $shadow-1;
   margin-bottom: 1.3rem;
 
@@ -13,6 +13,11 @@
     font-size: 1.35rem;
     margin-bottom: 0.65rem;
     color: $primary-500;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   //   p {
@@ -32,11 +37,37 @@
   &_price {
     font-size: $smallText;
     color: $grey-500;
+    margin-bottom: 1rem;
   }
 
   &_moderator {
     font-family: "Francois One";
     color: $grey-900;
+  }
+
+  &_addFav,
+  &_removeFav {
+    margin-bottom: 1.5em;
+    font-size: $smallText;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    border: 1px solid;
+    width: fit-content;
+    border-radius: 15px;
+    padding: .2rem .5rem;
+  }
+
+  &_fav_icon {
+    margin-left: 0.45em;
+  }
+
+  &_addFav {
+    color: $green-dark;
+  }
+
+  &_removeFav {
+    color: $red-dark;
   }
 
   &_imgDiv {

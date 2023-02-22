@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "..";
 import { EventInst } from "../types/types";
 
 interface InitialState {
   singleEvent: EventInst;
-  allEvents: EventInst[]
+  allEvents: EventInst[];
+  favEvents: EventInst[];
 }
 
 const initialState: InitialState = {
@@ -21,7 +23,8 @@ const initialState: InitialState = {
     capacity: null,
     createdBy: null,
   },
-  allEvents: []
+  allEvents: [],
+  favEvents: [],
 };
 
 const eventSlice = createSlice({
@@ -31,11 +34,16 @@ const eventSlice = createSlice({
     addSingleEvent(state, action: { type: any; payload: EventInst }) {
       state.singleEvent = action.payload;
     },
-    getAllEvents(state, action: {type: string, payload: EventInst[]}) {
-      state.allEvents = action.payload
+    getAllEvents(state, action: { type: string; payload: EventInst[] }) {
+      state.allEvents = action.payload;
+    },
+    getUserFavEvents(state, action: { type: string; payload: EventInst[] }) {
+      state.favEvents = action.payload;
     }
   },
 });
 
 export const eventActions = eventSlice.actions;
+export const selectFavEvents = (state: RootState) => state.event.favEvents;
+export const selectAllEvents = (state: RootState) => state.event.allEvents
 export default eventSlice.reducer;

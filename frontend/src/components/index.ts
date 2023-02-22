@@ -1,3 +1,4 @@
+import CheckoutForm from "./CheckoutForm";
 import FormItem from "./FormItem";
 import FormSelectItem from "./FormSelectItem";
 import Loading from "./Loading";
@@ -16,4 +17,5 @@ export {
   SingleTicket,
   FormItem,
   FormSelectItem,
+  CheckoutForm,
 };

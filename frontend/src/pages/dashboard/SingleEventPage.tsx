@@ -4,11 +4,15 @@ import recent1 from "../../assets/images/recent1.jpg";
 import Recent1 from "../../assets/images/recent1.jpg";
 import Recent2 from "../../assets/images/recent2.jpg";
 import Recent3 from "../../assets/images/recent3.jpg";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useParams } from "react-router-dom";
+import { getSingleEvent } from "../../store/event/event.action";
+import Alert from "../../components/Alert";
 
 const SingleEventPage = () => {
-
-  const { singleEvent } = useAppSelector((state) => state.event)
+  const { singleEvent } = useAppSelector((state) => state.event);
+  const { isLoading, showAlert } = useAppSelector((state) => state.generalUI);
+  const dispatch = useAppDispatch();
 
   const recentEventData = [
     {
@@ -31,10 +35,58 @@ const SingleEventPage = () => {
     },
   ];
 
-  useEffect(() => {}, []);
+  const { eventId } = useParams();
 
-  if(!singleEvent.id) {
-    return <Loading />
+  useEffect(() => {
+    if (eventId) {
+      dispatch(getSingleEvent(+eventId));
+    }
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (!singleEvent.id && !isLoading) {
+    return (
+      <div className="single_ticketPg">
+        <div className="single_ticketPg_recent recent">
+          <div>
+            {showAlert && <Alert />}
+            <p>Something went wrong, try again later</p>
+          </div>
+
+          <h4>Other Recent Events</h4>
+          <div className="recent_events">
+            {recentEventData.map((item) => {
+              return (
+                <SingleRecentEvent
+                  key={item.id}
+                  {...item}
+                  displayExtraContent={item.id === 2 ? true : false}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="creator single_ticketPg_creator">
+          <p>
+            You can also put your events out there for our exciting visitiors.
+          </p>
+          <button className="btn">Become a creator</button>
+        </div>
+
+        <div className="footer">
+          <div className="footer_container">
+            <span>Thanks for checking out our events</span>
+            <span>Thanks for checking out our events</span>
+            <span>Thanks for checking out our events</span>
+            <span>Thanks for checking out our events</span>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (

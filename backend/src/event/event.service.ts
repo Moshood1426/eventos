@@ -41,26 +41,25 @@ export class EventService {
   }
 
   //get all events
-  async getAll(query: Partial<GetEventQueryDto>) {
+  async getAll(query: Partial<GetEventQueryDto>, favId: number) {
     const { price, category, date, location, userId } = query;
 
     let result;
-
-    if (userId) {
+    if (favId) {
       const events = await this.eventRepo.find({
         loadRelationIds: true,
       });
 
       result = events.map((item) => {
         //@ts-ignore
-        if (item.isFavsOf.includes(+userId)) {
+        if (item.isFavsOf.includes(+favId)) {
           //@ts-ignore
           item.isFavorite = true;
         } else {
           //@ts-ignore
           item.isFavorite = false;
         }
-        delete item.isFavsOf
+        delete item.isFavsOf;
         return item;
       });
     } else {

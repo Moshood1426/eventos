@@ -13,6 +13,7 @@ import {
   MyEvents,
   MyTickets,
   Profile,
+  Checkout
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -40,7 +41,7 @@ function App() {
         >
           <Route index element={<AllTickets />} />
           <Route
-            path="single-event"
+            path="single-event/:eventId"
             element={<SingleEventPage />}
           />
           <Route path="create-event" element={<CreateEvent />} />
@@ -48,6 +49,7 @@ function App() {
           <Route path="my-events" element={<MyEvents />} />
           <Route path="my-tickets" element={<MyTickets />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </Router>

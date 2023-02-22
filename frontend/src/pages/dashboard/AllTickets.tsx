@@ -3,11 +3,12 @@ import { Loading, SingleTicket } from "../../components";
 import Recent1 from "../../assets/images/recent1.jpg";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getAllEvents } from "../../store/event/event.action";
+import Alert from "../../components/Alert";
 
 const AllTickets = () => {
   const dispatch = useAppDispatch();
   const { allEvents } = useAppSelector((state) => state.event);
-  const { isLoading } = useAppSelector((state) => state.generalUI);
+  const { isLoading, showAlert } = useAppSelector((state) => state.generalUI);
 
   useEffect(() => {
     dispatch(getAllEvents());
@@ -29,6 +30,7 @@ const AllTickets = () => {
   return (
     <div>
       <h4 className="tickets_header">Explore Tickets</h4>
+      {showAlert && <Alert />}
       <div className="tickets_container">
         <div className="tickets_filter">
           <h5>Filters</h5>

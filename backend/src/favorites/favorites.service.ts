@@ -18,7 +18,9 @@ export class FavoritesService {
   async getUserFavEvents(userId: number) {
     const userEvents = await this.favRepo.findOne({
       where: { userId: userId },
-      loadRelationIds: true
+      relations: {
+        eventIds: true,
+      },
     });
 
     if (!userEvents || !userEvents.eventIds) {
@@ -79,5 +81,18 @@ export class FavoritesService {
     } else {
       throw new BadRequestException('event was never a favorite');
     }
+  }
+
+  async getUserFavId(userId: number) {
+    const userFav = await this.favRepo.findOne({
+      where: { userId: userId },
+    });
+
+    if (!userFav) {
+      const userFavorite = this.favRepo.create({ userId: userId });
+      return (await this.favRepo.save(userFavorite)).id;
+    }
+
+    return userFav.id;
   }
 }
