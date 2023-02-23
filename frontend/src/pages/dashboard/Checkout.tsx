@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import { Navbar, CheckoutForm } from "../../components";
+import { CheckoutForm } from "../../components";
 import Alert from "../../components/Alert";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Elements } from "@stripe/react-stripe-js";
+import { checkout } from "../../store/sales/sales.actions";
 
 const stripePromise = loadStripe(
   "pk_test_51L9xvYJpNW4oWp0MXQxdl3qhB8VxY3MuAwFjEG3qVPomZt2ag1eM2OBMcWG4hJD1Y9b58M9kkJYvpss1XuVkGDDz00exYQZgzk"
@@ -14,9 +15,22 @@ const Checkout = () => {
 
   const { singleEvent } = useAppSelector((state) => state.event);
   const { showAlert } = useAppSelector((state) => state.generalUI);
+  const { order } = useAppSelector((state) => state.sales);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const eventId = singleEvent.id;
+    const quantity = order.numOfTickets;
+    dispatch(checkout(eventId, quantity!));
+
+    //eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    if (order.clientSecret) {
+      setClientSecret(order.clientSecret);
+    }
+  }, [order]);
 
   const goBack = () => {};
 

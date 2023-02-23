@@ -32,10 +32,16 @@ export class Sales {
   @Column()
   numOfTickets: number;
 
+  @Column()
+  eventId: number;
+
   @ManyToOne(() => Event)
-  ticketId: number;
+  event: Event;
+
+  @Column()
+  orderedBy: number;
 
   @ManyToOne(() => AuthEntity)
   @JoinColumn()
-  orderedBy: number;
+  user: AuthEntity;
 }

@@ -69,9 +69,12 @@ const updateUser = (userUpdate: { email: string; name: string }) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
-      const { data } = await authFetch.patch<LoginUserResponse>("/auth/update-user", {
-        ...userUpdate,
-      });
+      const { data } = await authFetch.patch<LoginUserResponse>(
+        "/auth/update-user",
+        {
+          ...userUpdate,
+        }
+      );
 
       dispatch(generalUIActions.isLoadingCompleted("User profile updated"));
       dispatch(authActions.login(data));

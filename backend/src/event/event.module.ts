@@ -32,5 +32,6 @@ const fileStorage = diskStorage({
   ],
   controllers: [EventController],
   providers: [EventService],
+  exports: [EventService]
 })
 export class EventModule {}

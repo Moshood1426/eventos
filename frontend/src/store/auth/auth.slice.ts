@@ -28,6 +28,11 @@ const authSlice = createSlice({
     toggleClientIsUser(state, action: { type: string; payload: boolean }) {
       state.clientIsUser = action.payload;
     },
+    logoutUser(state) {
+      state.user = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    },
   },
 });
 

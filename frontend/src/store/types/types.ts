@@ -57,3 +57,11 @@ export interface EventInst {
   createdBy: number | null;
   isFavorite?: boolean;
 }
+
+export interface SingleOrder {
+  clientSecret: string;
+  paymentIntentId: string;
+  totalOrderAmount: null | number;
+  numOfTickets: null | number;
+  id: null | number;
+}
