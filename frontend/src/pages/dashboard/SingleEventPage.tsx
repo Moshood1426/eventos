@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
-import { Loading, SingleRecentEvent } from "../../components";
-import recent1 from "../../assets/images/recent1.jpg";
+import React, { useEffect, useState } from "react";
+import { Loading, SingleRecentEvent, QuantityModal } from "../../components";
 import Recent1 from "../../assets/images/recent1.jpg";
 import Recent2 from "../../assets/images/recent2.jpg";
 import Recent3 from "../../assets/images/recent3.jpg";
@@ -10,8 +9,11 @@ import { getSingleEvent } from "../../store/event/event.action";
 import Alert from "../../components/Alert";
 
 const SingleEventPage = () => {
+  const [selectQuantity, setSelectQuantity] = useState(false);
+
   const { singleEvent } = useAppSelector((state) => state.event);
   const { isLoading, showAlert } = useAppSelector((state) => state.generalUI);
+
   const dispatch = useAppDispatch();
 
   const recentEventData = [
@@ -91,6 +93,7 @@ const SingleEventPage = () => {
 
   return (
     <div className="single_ticketPg">
+      {!selectQuantity && <QuantityModal />}
       <div className="single_ticketPg_header">
         <div>
           <h4 className="single_ticketPg_title">{singleEvent.title}</h4>
@@ -101,7 +104,12 @@ const SingleEventPage = () => {
           <span className="single_ticketPg_amt">
             ${singleEvent.price}/ticket
           </span>
-          <span className="single_ticketPg_price_action">Get Ticket</span>
+          <span
+            className="single_ticketPg_price_action"
+            onClick={() => setSelectQuantity(true)}
+          >
+            Get Ticket
+          </span>
         </div>
       </div>
 

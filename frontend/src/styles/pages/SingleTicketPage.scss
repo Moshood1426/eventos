@@ -80,3 +80,42 @@
     }
   }
 }
+
+.qty_modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &_bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 4;
+  }
+
+  &_content {
+    position: relative;
+    z-index: 5;
+    background-color: $primary-100;
+    width: 90%;
+    max-width: fit-content;
+    text-align: center;
+    padding: 2em;
+    box-shadow: $shadow-3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &_subtitle {
+      max-width: 400px;
+    }
+  }
+}
