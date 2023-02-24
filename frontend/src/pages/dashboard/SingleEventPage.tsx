@@ -43,6 +43,8 @@ const SingleEventPage = () => {
     if (eventId) {
       dispatch(getSingleEvent(+eventId));
     }
+
+    //eslint-disable-next-line
   }, []);
 
   if (isLoading) {

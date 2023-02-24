@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Loading, SingleTicket } from "../../components";
-import Recent1 from "../../assets/images/recent1.jpg";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { getAllEvents } from "../../store/event/event.action";
 import Alert from "../../components/Alert";
@@ -12,6 +11,8 @@ const AllTickets = () => {
 
   useEffect(() => {
     dispatch(getAllEvents());
+
+    //eslint-disable-next-line
   }, []);
 
   if (isLoading) {

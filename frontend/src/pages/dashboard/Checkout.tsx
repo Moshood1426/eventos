@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { CheckoutForm } from "../../components";
 import Alert from "../../components/Alert";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { Elements } from "@stripe/react-stripe-js";
-import { checkout } from "../../store/sales/sales.actions";
+
 import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(
@@ -17,16 +17,20 @@ const Checkout = () => {
   const { singleEvent } = useAppSelector((state) => state.event);
   const { showAlert } = useAppSelector((state) => state.generalUI);
   const { order } = useAppSelector((state) => state.sales);
-  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!order.clientSecret) {
+      navigate("/single-ticket");
+    }
     setClientSecret(order.clientSecret);
     //eslint-disable-next-line
   }, []);
 
-  const goBack = () => {};
+  const goBack = () => {
+    navigate("/single-ticket");
+  };
 
   const options = {
     clientSecret,

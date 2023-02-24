@@ -9,6 +9,8 @@ const Favorites = () => {
 
   useEffect(() => {
     dispatch(getFavEvents());
+
+    //eslint-disable-next-line
   }, []);
 
   return (
