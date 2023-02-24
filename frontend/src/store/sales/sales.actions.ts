@@ -15,9 +15,11 @@ export const checkout = (eventId: number, quantity: number) => {
 
       dispatch(salesActions.addOrder(data));
       dispatch(generalUIActions.isLoadingCompleted());
+      return true
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
+      return false
     }
   };
 };

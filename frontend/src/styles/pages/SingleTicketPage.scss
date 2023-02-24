@@ -114,8 +114,28 @@
     flex-direction: column;
     align-items: center;
 
+    &_title {
+      border-bottom: 1px solid $primary-300;
+      width: 100%;
+      padding-bottom: .4em;
+    }
+
     &_subtitle {
       max-width: 400px;
+    }
+  }
+
+  &_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .form_row {
+      width: stretch;
+    }
+
+    .go_back {
+      background-color: transparent;
     }
   }
 }

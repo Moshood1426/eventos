@@ -118,3 +118,13 @@
 .nav_form_input {
   height: 30px;
 }
+
+.user_icon {
+  position: relative;
+
+  &_options {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

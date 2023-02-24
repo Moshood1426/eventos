@@ -23,17 +23,15 @@ export class SalesService {
     if (event.capacity < quantity) {
       throw new BadRequestException('Quantity requested exceed availability');
     }
-
     let totalAmount = quantity * event.price;
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: totalAmount,
+      amount: (totalAmount * 100).toFixed(0),
       currency: 'usd',
       automatic_payment_methods: {
         enabled: true,
       },
     });
-
     const order = {
       numOfTickets: quantity,
       totalOrderAmount: totalAmount,

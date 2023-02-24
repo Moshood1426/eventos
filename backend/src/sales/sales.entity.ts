@@ -26,7 +26,7 @@ export class Sales {
   @Column()
   paymentIntentId: string;
 
-  @Column()
+  @Column('decimal', { precision: 5, scale: 2 })
   totalOrderAmount: number;
 
   @Column()

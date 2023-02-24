@@ -1,25 +1,40 @@
 import React, { useState } from "react";
 import Alert from "./Alert";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import FormItem from "./FormItem";
+import { checkout } from "../store/sales/sales.actions";
+import { useNavigate } from "react-router-dom";
 
 const QuantityModal = () => {
-  const [quantity, setQuantity] = useState("0");
+  const [quantity, setQuantity] = useState("1");
 
   const { showAlert } = useAppSelector((state) => state.generalUI);
   const { singleEvent } = useAppSelector((state) => state.event);
+  const { order } = useAppSelector((state) => state.sales);
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuantity(quantity);
+    const qty = event.target.value;
+    setQuantity(qty);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const eventId = singleEvent.id;
+    const result = await dispatch(checkout(eventId, +quantity));
+    if (result) {
+      navigate(`/checkout?payment_intent_client_secret=${order.clientSecret}`);
+    }
+  };
+
   return (
     <div className="qty_modal">
       <div className="qty_modal_bg"></div>
       <div className="qty_modal_content">
+        <h4 className="qty_modal_content_title">Before You Proceed...</h4>
         {showAlert && <Alert />}
-        <h3>Before You Proceed...</h3>
         <p className="qty_modal_content_subtitle">
           Kindly input the number of tickets you'll like to purchase for this
           event
@@ -35,7 +50,6 @@ const QuantityModal = () => {
           <button className="btn" type="submit">
             Submit
           </button>
-          <button className="btn go_back">{"<"} Go back</button>
         </form>
       </div>
     </div>

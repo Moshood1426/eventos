@@ -1,0 +1,62 @@
+.checkout {
+    
+  &_content {
+    width: 90%;
+    max-width: 450px;
+    margin: 0 auto;
+    padding: 2em;
+    text-align: center;
+    background-color: $white;
+    position: relative;
+    box-shadow: $shadow-4;
+
+    &_cancel {
+      position: absolute;
+      top: 1em;
+      right: 1em;
+      cursor: pointer;
+    }
+
+    &_title {
+      width: stretch;
+      border-bottom: $primary-300 solid 1px;
+      padding-bottom: 0.5em;
+      color: $grey-700;
+    }
+
+    &_order {
+      background-color: $primary-200;
+      padding: 1.1em;
+      margin-bottom: 1em;
+
+      h5 {
+        color: $primary-500;
+        font-family: "Francois One";
+      }
+
+      p {
+        margin-bottom: 0.76em;
+        font-size: $smallText;
+        color: $primary-500;
+      }
+    }
+  }
+
+  &_container {
+    width: 100%;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4em;
+    
+  }
+}
+
+.checkout_btn {
+  margin-top: 1.5em;
+  justify-self: center;
+  text-align: center;
+  width: stretch;
+}

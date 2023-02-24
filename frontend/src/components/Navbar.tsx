@@ -14,7 +14,10 @@ const Navbar: React.FC = () => {
           <span>eventos</span>
         </Link>
         {user ? (
-          <span className="nav_profile">{user.name[0]}</span>
+          <div className="user_icon">
+            <span className="nav_profile">{user.name[0]}</span>
+            <div></div>
+          </div>
         ) : (
           <>
             <div className="nav_items">

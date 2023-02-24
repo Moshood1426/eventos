@@ -13,7 +13,8 @@ import {
   MyEvents,
   MyTickets,
   Profile,
-  Checkout
+  Checkout,
+  PaymentConfirm,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -40,16 +41,14 @@ function App() {
           }
         >
           <Route index element={<AllTickets />} />
-          <Route
-            path="single-event/:eventId"
-            element={<SingleEventPage />}
-          />
+          <Route path="single-event/:eventId" element={<SingleEventPage />} />
           <Route path="create-event" element={<CreateEvent />} />
           <Route path="favorites" element={<Favorites />} />
           <Route path="my-events" element={<MyEvents />} />
           <Route path="my-tickets" element={<MyTickets />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
+          <Route path="checkout-success" element={<PaymentConfirm />} />
         </Route>
       </Routes>
     </Router>

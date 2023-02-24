@@ -5,9 +5,10 @@ import Alert from "../../components/Alert";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { Elements } from "@stripe/react-stripe-js";
 import { checkout } from "../../store/sales/sales.actions";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(
-  "pk_test_51L9xvYJpNW4oWp0MXQxdl3qhB8VxY3MuAwFjEG3qVPomZt2ag1eM2OBMcWG4hJD1Y9b58M9kkJYvpss1XuVkGDDz00exYQZgzk"
+  "pk_test_51KquqlF4FMElgbnODSdLfBuLsEDCQLJy0PxFlQWA5SxOIgcnbhSbe92FEUySR9vWUIJR3zPpwNZnRmGn0zYFYZLO00hEMl9PW1"
 );
 
 const Checkout = () => {
@@ -18,19 +19,12 @@ const Checkout = () => {
   const { order } = useAppSelector((state) => state.sales);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const eventId = singleEvent.id;
-    const quantity = order.numOfTickets;
-    dispatch(checkout(eventId, quantity!));
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    setClientSecret(order.clientSecret);
     //eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    if (order.clientSecret) {
-      setClientSecret(order.clientSecret);
-    }
-  }, [order]);
 
   const goBack = () => {};
 
@@ -39,24 +33,24 @@ const Checkout = () => {
   };
 
   return (
-    <div>
-      <div className="checkout_container">
+    <div className="checkout_container">
+      <div className="checkout_content">
         <span
-          className="checkout_cancel"
+          className="checkout_content_cancel"
           onClick={() => {
             goBack();
           }}
         >
           ❌
         </span>
-        <h4>Make Payment</h4>
+        <h5 className="checkout_content_title">Complete Payment</h5>
         {singleEvent ? (
-          <div className="checkout_order">
+          <div className="checkout_content_order">
+            <h5 className="checkout_order_title">{singleEvent.title}</h5>
             <p className="checkout_order_details">
               Category: {singleEvent.category} - Location:{" "}
               {singleEvent.location}
             </p>
-            <h4 className="checkout_order_title">{singleEvent.title}</h4>
             <p className="checkout_order_amount">
               Total Amount: ${singleEvent.price}
             </p>
