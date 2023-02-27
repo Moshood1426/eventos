@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { SingleOrder } from "../types/types";
+import { SingleOrder, SingleTicket } from "../types/types";
 
 interface initialStateInterface {
   order: SingleOrder;
+  tickets: SingleTicket[];
 }
 
 const initialState: initialStateInterface = {
@@ -13,6 +14,7 @@ const initialState: initialStateInterface = {
     paymentIntentId: "",
     id: 0,
   },
+  tickets: [],
 };
 
 const salesSlice = createSlice({
@@ -21,6 +23,12 @@ const salesSlice = createSlice({
   reducers: {
     addOrder(state, action: { type: string; payload: SingleOrder }) {
       state.order = action.payload;
+    },
+    getUserTickets(state, action: { type: string; payload: SingleTicket[] }) {
+      state.tickets = action.payload;
+    },
+    resetSalesState(state) {
+      state = initialState;
     },
   },
 });

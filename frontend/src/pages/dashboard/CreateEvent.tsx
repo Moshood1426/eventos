@@ -92,9 +92,9 @@ const CreateEvent = () => {
     const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
     formInfo.set("date", date);
 
-    const res = await dispatch(createEvent(formInfo as unknown as HTMLFormElement))
-    if(res) {
-      navigate("/single-event")
+    const eventId = await dispatch(createEvent(formInfo as unknown as HTMLFormElement))
+    if(eventId) {
+      navigate(`/single-event/${eventId}`)
     }
   };
 

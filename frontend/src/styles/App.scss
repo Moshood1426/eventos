@@ -9,6 +9,7 @@
 @import "./pages/register.scss";
 @import "./components/NavMenu.scss";
 @import "./components/SingleTicket.scss";
+@import "./pages/MyTickets.scss";
 @import "./pages/AllTickets.scss";
 @import "./pages/SingleTicketPage.scss";
 @import "./pages/Profile.scss";
@@ -260,8 +261,12 @@ a {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 // .container {

@@ -84,14 +84,19 @@ export class EventService {
 
   //get single user events
   async getUserEvents({ role, userId }) {
+    console.log(role, userId)
     if (role !== 'creator') {
       throw new UnauthorizedException('user not allowed to access this route');
     }
 
+    console.log({ createdById: userId })
     const events = await this.eventRepo.find({
-      where: { createdBy: userId },
+      //@ts-ignore
+      where: { createdById: 4 },
       loadRelationIds: true,
     });
+
+    console.log(events)
 
     if (!events) {
       throw new NotFoundException('User has no active events');

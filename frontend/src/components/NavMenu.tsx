@@ -11,7 +11,7 @@ const NavMenu = () => {
   ];
 
   const creatorActions = [
-    { id: 1, title: "stats", to: "/" },
+    { id: 1, title: "Stats", to: "/" },
     { id: 2, title: "Create Event", to: "/create-event" },
     { id: 3, title: "My Events", to: "/my-events" },
     { id: 4, title: "Profile", to: "/profile" },

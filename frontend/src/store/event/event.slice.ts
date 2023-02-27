@@ -6,6 +6,8 @@ interface InitialState {
   singleEvent: EventInst;
   allEvents: EventInst[];
   favEvents: EventInst[];
+  userEvents: EventInst[];
+  tickets: [];
 }
 
 const initialState: InitialState = {
@@ -25,6 +27,8 @@ const initialState: InitialState = {
   },
   allEvents: [],
   favEvents: [],
+  tickets: [],
+  userEvents: [],
 };
 
 const eventSlice = createSlice({
@@ -39,11 +43,17 @@ const eventSlice = createSlice({
     },
     getUserFavEvents(state, action: { type: string; payload: EventInst[] }) {
       state.favEvents = action.payload;
-    }
+    },
+    resetEventState(state) {
+      state = initialState;
+    },
+    getUserEvents(state, action: { type: string; payload: EventInst[] }) {
+      state.userEvents = action.payload;
+    },
   },
 });
 
 export const eventActions = eventSlice.actions;
 export const selectFavEvents = (state: RootState) => state.event.favEvents;
-export const selectAllEvents = (state: RootState) => state.event.allEvents
+export const selectAllEvents = (state: RootState) => state.event.allEvents;
 export default eventSlice.reducer;

@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Request } from 'express';
 import { UserPayloadDto } from 'src/auth/dto/user_payload.dto';
 import { Event } from 'src/event/event.entity';
 import { Repository } from 'typeorm';
@@ -34,7 +35,7 @@ export class SalesService {
     });
     const order = {
       numOfTickets: quantity,
-      totalOrderAmount: totalAmount,
+      totalOrderAmount: +totalAmount,
       eventId: event.id,
       orderedBy: user.userId,
       status: 'pending',
@@ -57,5 +58,53 @@ export class SalesService {
       totalOrderAmount,
       numOfTickets,
     };
+  }
+
+  async updatePayment(req: Request) {
+    const event = req.body;
+
+    const paymentIntentId = event.data.object.payment_intent;
+    const order = await this.salesRepo.findOne({ where: { paymentIntentId } });
+
+    if (event.type === 'charge.succeeded') {
+      order.status = 'paid';
+      await this.salesRepo.save(order);
+      console.log('order status updated to paid');
+    }
+
+    if (event.type === 'charge.failed') {
+      order.status = 'failed';
+      await this.salesRepo.save(order);
+      console.log('order status updated to paid');
+    }
+
+    return { msg: 'Order updated succesfully' };
+  }
+
+  async getUserTickets(userId: number) {
+    const tickets = await this.salesRepo.find({
+      where: { orderedBy: userId },
+      relations: {
+        event: true,
+      },
+    });
+
+    const result = tickets.map((item) => {
+      return {
+        id: item.id,
+        status: item.status,
+        clientSecret: item.clientSecret,
+        paymentIntentId: item.paymentIntentId,
+        totalOrderAmount: item.totalOrderAmount,
+        numOfTickets: item.numOfTickets,
+        event: {
+          id: item.event.id,
+          title: item.event.title,
+          price: item.event.price,
+        },
+      };
+    });
+
+    return result;
   }
 }

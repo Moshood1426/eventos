@@ -1,11 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { toggleClientIsUser } from "../store/auth/auth.actions";
+import gsap from "gsap";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signOut, toggleClientIsUser } from "../store/auth/auth.actions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 const Navbar: React.FC = () => {
+  const [displayLogout, setDisplayLogout] = useState(false);
+
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
+  const userRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (displayLogout) {
+      gsap.from(userRef.current, {
+        clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+        autoAlpha: 0,
+      });
+    }
+  }, [displayLogout]);
 
   return (
     <nav className="nav">
@@ -15,8 +31,26 @@ const Navbar: React.FC = () => {
         </Link>
         {user ? (
           <div className="user_icon">
-            <span className="nav_profile">{user.name[0]}</span>
-            <div></div>
+            <span
+              className="nav_profile"
+              onClick={() => setDisplayLogout(!displayLogout)}
+            >
+              {user.name[0]}
+            </span>
+            {displayLogout && (
+              <div className="user_icon_options" ref={userRef}>
+                <p className="dropdown_name">{user?.name}</p>
+                <p>Profile</p>
+                <p
+                  onClick={() => {
+                    dispatch(signOut());
+                    navigate("/landing");
+                  }}
+                >
+                  Log out
+                </p>
+              </div>
+            )}
           </div>
         ) : (
           <>

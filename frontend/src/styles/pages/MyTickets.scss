@@ -1,0 +1,54 @@
+.single_ticket {
+  &_container {
+    margin-bottom: 2.2em;
+    max-width: 750px;
+    border: 1px solid $primary-300;
+    box-shadow: $shadow-2;
+  }
+
+  &_content {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    // background-color: $primary-300;
+    padding: 1em 0;
+
+    &_num,
+    &_qty,
+    &_price {
+      padding: 0 1.2rem;
+      font-size: $smallText;
+    }
+
+    h5 {
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: $smallText;
+      align-self: center;
+
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    p,
+    h5 {
+      margin: 0;
+
+      span {
+        font-size: $extraSmallText;
+      }
+    }
+  }
+
+  &_status {
+    width: 100%;
+    background-color: #f4dfdf;
+    padding: 0.35rem 2.5rem;
+    font-size: $smallText;
+    color: $grey-900;
+    p {
+      margin: 0;
+    }
+  }
+}

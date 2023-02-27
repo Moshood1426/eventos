@@ -4,6 +4,8 @@ import axios from "axios";
 import authFetch, { handleAxiosError } from "../axios";
 import { User } from "../types/types";
 import { invalidAction } from "../generalUI/generalUI.actions";
+import { eventActions } from "../event/event.slice";
+import { salesActions } from "../sales/sales.slice";
 
 interface LoginUserResponse {
   name: string;
@@ -129,6 +131,17 @@ const updateUserPassword = (userPasswords: {
   };
 };
 
+const signOut = () => {
+  return (dispatch: any) => {
+    dispatch(authActions.logoutUser());
+    dispatch(eventActions.resetEventState());
+    dispatch(salesActions.resetSalesState());
+    dispatch(generalUIActions.resetUIState());
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  };
+};
+
 const addUserToLocalStorage = (user: User, token: string) => {
   localStorage.setItem("user", JSON.stringify(user));
   localStorage.setItem("token", token);
@@ -142,4 +155,5 @@ export {
   toggleClientIsUser,
   updateUser,
   updateUserPassword,
+  signOut,
 };

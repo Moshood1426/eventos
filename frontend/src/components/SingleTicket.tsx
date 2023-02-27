@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { addEventAsFav, removeEventFromFav } from "../store/event/event.action";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
 
 interface SingleTicketProps {
   id: number;
@@ -20,10 +21,24 @@ interface SingleTicketProps {
 const SingleTicket: React.FC<SingleTicketProps> = (props) => {
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const getSingleEvent = (id: number) => {
-    navigate(`/single-event/${id}`)
+  const ticketRef = useRef(null);
+
+  useEffect(() => {
+    gsap.from(ticketRef.current, {
+      y: 20,
+      autoAlpha: 0,
+      stagger: 1,
+      scrollTrigger: {
+        trigger: ticketRef.current,
+        start: "top 80%",
+      },
+    });
+  });
+
+  const getSingleEvent = (id: number, date: string) => {
+    navigate(`/single-event/${id}?date=${date}`);
   };
 
   const addEventToFav = (eventId: number) => {
@@ -35,12 +50,12 @@ const SingleTicket: React.FC<SingleTicketProps> = (props) => {
   };
 
   return (
-    <div className="single_ticket">
+    <div className="single_ticket" ref={ticketRef}>
       <h5 className="single_ticket_number">{props.number}.</h5>
       <div className="single_ticket_details">
         <h5
           className="single_ticket_title"
-          onClick={() => getSingleEvent(props.id)}
+          onClick={() => getSingleEvent(props.id, props.date)}
         >
           {props.title}
         </h5>

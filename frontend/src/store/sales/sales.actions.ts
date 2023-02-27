@@ -1,7 +1,7 @@
 import authFetch, { handleAxiosError } from "../axios";
 import { invalidAction } from "../generalUI/generalUI.actions";
 import { generalUIActions } from "../generalUI/generalUI.slice";
-import { SingleOrder } from "../types/types";
+import { SingleOrder, SingleTicket } from "../types/types";
 import { salesActions } from "./sales.slice";
 
 export const checkout = (eventId: number, quantity: number) => {
@@ -15,11 +15,26 @@ export const checkout = (eventId: number, quantity: number) => {
 
       dispatch(salesActions.addOrder(data));
       dispatch(generalUIActions.isLoadingCompleted());
-      return true
+      return true;
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
-      return false
+      return false;
+    }
+  };
+};
+
+export const getUserTickets = () => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts);
+    try {
+      const { data } = await authFetch.get<SingleTicket[]>("/sales/tickets");
+
+      dispatch(salesActions.getUserTickets(data));
+      dispatch(generalUIActions.isLoadingCompleted());
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
     }
   };
 };

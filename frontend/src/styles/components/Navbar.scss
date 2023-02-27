@@ -124,7 +124,32 @@
 
   &_options {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 2.3em;
+    right: 0;
+    border: 1px solid $primary-300;
+    z-index: 5;
+    width: 150px;
+    text-align: center;
+    background-color: #fcf4f4;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    opacity: 1;
+
+    p {
+      font-size: $extraSmallText;
+      white-space: nowrap;
+      margin-bottom: 0em;
+      padding: 0.5em 1em;
+      border-bottom: 1px solid $primary-200;
+      cursor: pointer;
+    }
+
+    .dropdown_name {
+      background-color: $primary-100;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      z-index: 6;
+      // max-width: 140px;
+    }
   }
 }

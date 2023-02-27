@@ -10,6 +10,7 @@ import Alert from "../../components/Alert";
 
 const SingleEventPage = () => {
   const [selectQuantity, setSelectQuantity] = useState(false);
+  const [date, setDate] = useState("");
 
   const { singleEvent } = useAppSelector((state) => state.event);
   const { isLoading, showAlert } = useAppSelector((state) => state.generalUI);
@@ -43,7 +44,9 @@ const SingleEventPage = () => {
     if (eventId) {
       dispatch(getSingleEvent(+eventId));
     }
+    const date = new URLSearchParams(window.location.search).get("date");
 
+    if (date) setDate(date);
     //eslint-disable-next-line
   }, []);
 
@@ -95,11 +98,13 @@ const SingleEventPage = () => {
 
   return (
     <div className="single_ticketPg">
-      {!selectQuantity && <QuantityModal />}
+      {selectQuantity && <QuantityModal />}
       <div className="single_ticketPg_header">
         <div>
           <h4 className="single_ticketPg_title">{singleEvent.title}</h4>
-          <p className="single_ticketPg_date">{singleEvent.date}</p>
+          <p className="single_ticketPg_date">
+            {date ? date : singleEvent.date}
+          </p>
         </div>
 
         <div className="single_ticketPg_price">

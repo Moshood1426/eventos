@@ -41,6 +41,9 @@ const generalUISlice = createSlice({
       state.alertType = "";
       state.showAlert = false;
     },
+    resetUIState(state) {
+      state = initialState;
+    },
   },
 });
 

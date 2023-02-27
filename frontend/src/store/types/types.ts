@@ -65,3 +65,32 @@ export interface SingleOrder {
   numOfTickets: null | number;
   id: null | number;
 }
+
+// {
+//   id: 17,
+//   status: "pending",
+//   clientSecret:
+//     "pi_3MfP8cF4FMElgbnO07iK25bI_secret_lgkRGNkLS1gVDb9mVLTX3dNyu",
+//   paymentIntentId: "pi_3MfP8cF4FMElgbnO07iK25bI",
+//   totalOrderAmount: "75.60",
+//   numOfTickets: 3,
+//   event: {
+//     id: 1,
+//     title: "Chelsea Champions League Game",
+//     price: "25.20",
+//   },
+// },
+
+export interface SingleTicket {
+  id: number;
+  status: string;
+  clientSecret: string;
+  paymentIntentId: string;
+  totalOrderAmount: number;
+  numOfTickets: number;
+  event: {
+    id: number;
+    title: string;
+    price: number;
+  };
+}

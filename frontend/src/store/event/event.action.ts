@@ -22,7 +22,7 @@ export const createEvent = (formData: HTMLFormElement) => {
       dispatch(eventActions.addSingleEvent(data));
 
       localStorage.setItem("lastSingleEventId", JSON.stringify(data.id));
-      return true;
+      return data.id;
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
@@ -130,6 +130,21 @@ export const removeEventFromFav = (eventId: number) => {
         );
         dispatch(eventActions.getAllEvents(allEventResult));
       }
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+    }
+  };
+};
+
+export const getUserEvents = () => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    try {
+      const { data } = await authFetch.get<EventInst[]>("/event/user");
+
+      dispatch(eventActions.getUserEvents(data));
+      dispatch(generalUIActions.isLoadingCompleted());
     } catch (error) {
       const result = handleAxiosError(error);
       dispatch(invalidAction(result.message));
