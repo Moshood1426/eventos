@@ -119,4 +119,14 @@ export class AuthService {
 
     return { ...userUpdated, token };
   }
+
+  async getUser(userId) {
+    const user = this.authRepo.findOne({ where: { id: userId } });
+
+    if (!user) {
+      throw new BadRequestException('user does not exist');
+    }
+
+    return user;
+  }
 }

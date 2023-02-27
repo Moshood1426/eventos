@@ -66,8 +66,11 @@ export class Event {
 
   @ManyToOne(() => AuthEntity)
   @JoinColumn()
-  createdBy: number;
+  createdBy: AuthEntity;
 
-  @ManyToMany(() => Favorites, favs => favs.eventIds)
-  isFavsOf: Favorites[]
+  @Column()
+  createdById: number;
+
+  @ManyToMany(() => Favorites, (favs) => favs.eventIds)
+  isFavsOf: Favorites[];
 }

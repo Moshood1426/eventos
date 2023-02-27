@@ -5,6 +5,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import path from 'path';
+import { AuthEntity } from 'src/auth/auth.entity';
+import { AuthService } from 'src/auth/auth.service';
 import { UserPayloadDto } from 'src/auth/dto/user_payload.dto';
 import { checkPermissions } from 'src/utils/checkPermissions';
 import { Repository } from 'typeorm';
@@ -16,6 +18,7 @@ import { Event } from './event.entity';
 export class EventService {
   constructor(
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
+    private readonly authService: AuthService,
   ) {}
 
   //create event
@@ -30,11 +33,13 @@ export class EventService {
     if (user.role !== 'creator') {
       throw new UnauthorizedException('user cannot create event');
     }
+    const userInstance = await this.authService.getUser(user.userId);
 
     const event = this.eventRepo.create({
       ...body,
       imgPath: file.path,
-      createdBy: user.userId,
+      createdBy: userInstance,
+      createdById: user.userId,
     });
 
     return this.eventRepo.save(event);
@@ -84,19 +89,15 @@ export class EventService {
 
   //get single user events
   async getUserEvents({ role, userId }) {
-    console.log(role, userId)
     if (role !== 'creator') {
       throw new UnauthorizedException('user not allowed to access this route');
     }
 
-    console.log({ createdById: userId })
     const events = await this.eventRepo.find({
       //@ts-ignore
-      where: { createdById: 4 },
+      where: { createdById: userId },
       loadRelationIds: true,
     });
-
-    console.log(events)
 
     if (!events) {
       throw new NotFoundException('User has no active events');
@@ -121,7 +122,7 @@ export class EventService {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
 
-    checkPermissions(event.createdBy, userId);
+    checkPermissions(event.createdById, userId);
 
     for (let item in body) {
       event[item] = body[item];
@@ -140,7 +141,7 @@ export class EventService {
     if (!event) {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
-    checkPermissions(event.createdBy, userId);
+    checkPermissions(event.createdById, userId);
 
     //remove event image
     await this.eventRepo.remove(event);
