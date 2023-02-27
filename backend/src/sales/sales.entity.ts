@@ -35,7 +35,7 @@ export class Sales {
   @Column()
   eventId: number;
 
-  @ManyToOne(() => Event)
+  @ManyToOne(() => Event, {onDelete: "CASCADE"})
   event: Event;
 
   @Column()

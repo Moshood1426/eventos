@@ -1,11 +1,14 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FormItem, FormSelectItem } from "../../components";
 import { ReactComponent as CreateEventSvg } from "../../assets/images/createEvent.svg";
 import { BsFillCameraFill } from "react-icons/bs";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { invalidAction } from "../../store/generalUI/generalUI.actions";
 import Alert from "../../components/Alert";
-import { createEvent } from "../../store/event/event.action";
+import {
+  createEvent,
+  editEvent as execEditEvent,
+} from "../../store/event/event.action";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
@@ -43,13 +46,33 @@ const initialState = {
 const CreateEvent = () => {
   const [formData, setFormData] = useState(initialState);
   const [imageName, setImageName] = useState("");
+  const [eventEditId, setEventEditId] = useState<null | number>(null);
 
   const { showAlert } = useAppSelector((state) => state.generalUI);
+  const { editEvent, singleEvent } = useAppSelector((state) => state.event);
   const dispatch = useAppDispatch();
 
   const formRef = useRef(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (editEvent) {
+      const newFormData = {
+        category: singleEvent.category,
+        title: singleEvent.title,
+        date: singleEvent.date,
+        description: singleEvent.description,
+        venue: singleEvent.venue,
+        location: singleEvent.location,
+        price: singleEvent.price!.toString(),
+        capacity: singleEvent.capacity!.toString(),
+        host: singleEvent.host,
+      };
+      setFormData((prevValue) => ({ ...prevValue, ...newFormData }));
+      setEventEditId(singleEvent.id);
+    }
+  }, [editEvent]);
 
   const handleChange = (
     event: React.ChangeEvent<
@@ -82,19 +105,45 @@ const CreateEvent = () => {
 
     // @ts-ignore
     const fileUploaded = event.target[event.target.length - 2].files[0];
+    const formInfo = new FormData(formRef.current!);
+
+    //if user wants to edit details event without new image
+    if (editEvent && !fileUploaded) {
+      const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
+      formInfo.set("date", date);
+
+      const eventId = await dispatch(
+        execEditEvent(formData as unknown as HTMLFormElement, eventEditId!)
+      );
+      if (eventId) {
+        navigate(`/single-event/${eventId}`);
+      }
+      return;
+    }
+
+    // if user wants to edit image alongside event or create new event
     if (!fileUploaded || !fileUploaded.type.startsWith("image")) {
       dispatch(invalidAction("Kindly upload an image to proceed"));
       return;
     }
 
-    const formInfo = new FormData(formRef.current!);
     formInfo.append("image", fileUploaded);
     const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
     formInfo.set("date", date);
 
-    const eventId = await dispatch(createEvent(formInfo as unknown as HTMLFormElement))
-    if(eventId) {
-      navigate(`/single-event/${eventId}`)
+    let eventId: number | false;
+    if (editEvent) {
+      eventId = await dispatch(
+        execEditEvent(formData as unknown as HTMLFormElement, eventEditId!)
+      );
+    } else {
+      eventId = await dispatch(
+        createEvent(formInfo as unknown as HTMLFormElement)
+      );
+    }
+
+    if (eventId) {
+      navigate(`/single-event/${eventId}`);
     }
   };
 
@@ -103,7 +152,11 @@ const CreateEvent = () => {
       <div className="register_img">
         <CreateEventSvg />
       </div>
-      <h3 className="form_title">Let’s Help You Put Your Event Out There</h3>
+      <h3 className="form_title">
+        {editEvent
+          ? "Edit Event Details"
+          : "Let’s Help You Put Your Event Out There"}
+      </h3>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua.
@@ -201,7 +254,7 @@ const CreateEvent = () => {
 
         <div className="form_dual_row">
           <button className="btn form_btn" type="submit">
-            Submit
+            Submit {editEvent && " Changes"}
           </button>
         </div>
       </form>

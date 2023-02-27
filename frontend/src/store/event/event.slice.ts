@@ -8,6 +8,7 @@ interface InitialState {
   favEvents: EventInst[];
   userEvents: EventInst[];
   tickets: [];
+  editEvent: boolean;
 }
 
 const initialState: InitialState = {
@@ -29,6 +30,7 @@ const initialState: InitialState = {
   favEvents: [],
   tickets: [],
   userEvents: [],
+  editEvent: false,
 };
 
 const eventSlice = createSlice({
@@ -49,6 +51,9 @@ const eventSlice = createSlice({
     },
     getUserEvents(state, action: { type: string; payload: EventInst[] }) {
       state.userEvents = action.payload;
+    },
+    setEditEvent(state, action: { type: string; payload: boolean }) {
+      state.editEvent = action.payload;
     },
   },
 });

@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getSingleEvent } from "../../store/event/event.action";
 import Alert from "../../components/Alert";
 import { deleteEvent as execDeleteEvent } from "../../store/event/event.action";
+import { eventActions } from "../../store/event/event.slice";
 
 const SingleEventPage = () => {
   const [selectQuantity, setSelectQuantity] = useState(false);
@@ -18,14 +19,17 @@ const SingleEventPage = () => {
   const { isLoading, showAlert } = useAppSelector((state) => state.generalUI);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const editEvent = () => {};
+  const editEvent = () => {
+    dispatch(eventActions.setEditEvent(true));
+    navigate("/create-event")
+  };
 
   const deleteEvent = async (eventId: number) => {
-    const result = await dispatch(execDeleteEvent(eventId))
-    if(result) {
-      navigate("/my-events")
+    const result = await dispatch(execDeleteEvent(eventId));
+    if (result) {
+      navigate("/my-events");
     }
   };
 

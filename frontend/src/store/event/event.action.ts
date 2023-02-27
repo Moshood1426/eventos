@@ -152,12 +152,29 @@ export const getUserEvents = () => {
   };
 };
 
-export const editEvent = () => {
+export const editEvent = (formData: HTMLFormElement, eventId: number) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
-    // try {
-    //   const {data} = authFetch.patch("/event/")
-    // } catch (error) {}
+    try {
+      const { data } = await authFetch.patch<EventInst>(
+        `/event/${eventId}`,
+        formData
+      );
+
+      if (!data.createdBy) {
+        data.createdBy = selectUser(store.getState())!.id;
+      }
+
+      dispatch(generalUIActions.isLoadingCompleted());
+      dispatch(eventActions.addSingleEvent(data));
+
+      localStorage.setItem("lastSingleEventId", JSON.stringify(data.id));
+      return data.id;
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+      return false;
+    }
   };
 };
 
