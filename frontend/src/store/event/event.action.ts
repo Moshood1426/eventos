@@ -151,3 +151,29 @@ export const getUserEvents = () => {
     }
   };
 };
+
+export const editEvent = () => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    // try {
+    //   const {data} = authFetch.patch("/event/")
+    // } catch (error) {}
+  };
+};
+
+export const deleteEvent = (eventId: number) => {
+  return async (dispatch: any) => {
+    dispatch(generalUIActions.isLoadingStarts());
+    try {
+      const { data } = await authFetch.delete<{ msg: string }>(
+        `/event/${eventId}`
+      );
+      dispatch(generalUIActions.isLoadingCompleted());
+      return true;
+    } catch (error) {
+      const result = handleAxiosError(error);
+      dispatch(invalidAction(result.message));
+      return false;
+    }
+  };
+};

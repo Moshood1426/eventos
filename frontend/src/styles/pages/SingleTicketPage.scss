@@ -1,4 +1,29 @@
 .single_ticketPg {
+  &_actions {
+    display: flex;
+    font-size: $smallText;
+    gap: 1rem;
+    align-items: center;
+
+    &_edit {
+      background-color: $green-light;
+      color: $green-dark;
+    }
+
+    &_delete {
+      background-color: $red-light;
+      color: $red-dark;
+    }
+
+    p {
+      box-shadow: $shadow-2;
+      padding: 0.5em 2em;
+      margin: 0;
+      font-weight: bolder;
+      cursor: pointer;
+    }
+  }
+
   &_header {
     border-bottom: 1px solid $primary-300;
     padding-bottom: 1.5rem;
@@ -117,7 +142,7 @@
     &_title {
       border-bottom: 1px solid $primary-300;
       width: 100%;
-      padding-bottom: .4em;
+      padding-bottom: 0.4em;
     }
 
     &_subtitle {

@@ -65,7 +65,7 @@ const SingleTicket: React.FC<SingleTicketProps> = (props) => {
         </p>
         <p className="single_ticket_price">Starts from ${props.price}</p>
 
-        {user &&
+        {user?.role === "consumer" &&
           (props.isFavorite ? (
             <p
               className="single_ticket_removeFav"
