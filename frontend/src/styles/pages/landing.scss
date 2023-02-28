@@ -49,6 +49,7 @@
     color: $primary-300;
     display: flex;
     align-items: center;
+    opacity: 0;
     svg {
       margin-left: 16px;
       border: 2px solid $primary-300;
@@ -73,7 +74,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 0%;
+    height: 110%;
     width: 100%;
     z-index: 6;
     background-color: $primary-100;
@@ -92,7 +93,6 @@
   padding: 0.5em 1em;
   white-space: nowrap;
   display: flex;
-  gap: 2em;
   overflow: hidden;
   margin-bottom: 5rem;
 
@@ -100,17 +100,15 @@
     font-size: 3rem;
     text-transform: uppercase;
     inline-size: min-content;
-    // // overflow: auto;
-    // overflow: hidden;
+    margin-right: 2em;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
-
-  // .horizontal_text_content {
-  //   transform: translateX(50%);
-  // }
 }
 
 h1 {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 }
 
 .recent {
@@ -163,7 +161,17 @@ h1 {
     align-self: center;
   }
 
-  li {
+  &_list_item {
+    position: relative;
+
+    li {
+      z-index: 3;
+      position: relative;
+    }
+  }
+
+  li,
+  span {
     font-size: 2rem;
     margin-bottom: 1rem;
     list-style: circle;
@@ -172,11 +180,20 @@ h1 {
     width: 100%;
     color: $grey-300;
     cursor: pointer;
+    transition: 0.5s ease-in-out all;
     // white-space: nowrap;
 
     @include media(">=tablet") {
       font-size: 2.5rem;
     }
+  }
+
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    color: $primary-500;
   }
 
   .active {
@@ -186,6 +203,12 @@ h1 {
   &_img {
     display: none;
     justify-self: center;
+    clip-path: "polygon(0 0, 100% 0, 100% 0, 0 0)";
+    
+    img {
+      max-height: 400px;
+      box-shadow: $shadow-3;
+    }
 
     @include media(">=tablet") {
       display: block;
@@ -253,7 +276,7 @@ h1 {
   font-size: 1.5rem;
   font-family: "Francois One";
   background-color: $primary-500;
-  padding: .5rem;
+  padding: 0.5rem;
 
   &_container {
     background-color: $primary-100;

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Loading, SingleRecentEvent, QuantityModal } from "../../components";
+import {
+  Loading,
+  SingleRecentEvent,
+  QuantityModal,
+  RecentEvents,
+} from "../../components";
 import Recent1 from "../../assets/images/recent1.jpg";
 import Recent2 from "../../assets/images/recent2.jpg";
 import Recent3 from "../../assets/images/recent3.jpg";
@@ -23,7 +28,7 @@ const SingleEventPage = () => {
 
   const editEvent = () => {
     dispatch(eventActions.setEditEvent(true));
-    navigate("/create-event")
+    navigate("/create-event");
   };
 
   const deleteEvent = async (eventId: number) => {
@@ -79,18 +84,7 @@ const SingleEventPage = () => {
             <p>Something went wrong, try again later</p>
           </div>
 
-          <h4>Other Recent Events</h4>
-          <div className="recent_events">
-            {recentEventData.map((item) => {
-              return (
-                <SingleRecentEvent
-                  key={item.id}
-                  {...item}
-                  displayExtraContent={item.id === 2 ? true : false}
-                />
-              );
-            })}
-          </div>
+          <RecentEvents />
         </div>
 
         <div className="creator single_ticketPg_creator">
@@ -173,18 +167,7 @@ const SingleEventPage = () => {
       </div>
 
       <div className="single_ticketPg_recent recent">
-        <h4>Other Recent Events</h4>
-        <div className="recent_events">
-          {recentEventData.map((item) => {
-            return (
-              <SingleRecentEvent
-                key={item.id}
-                {...item}
-                displayExtraContent={item.id === 2 ? true : false}
-              />
-            );
-          })}
-        </div>
+        <RecentEvents />
       </div>
 
       <div className="creator single_ticketPg_creator">

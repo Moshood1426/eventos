@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import Navbar from "./Navbar";
 import NavMenu from "./NavMenu";
 import QuantityModal from "./QuantityModal";
+import RecentEvents from "./RecentEvents";
 import SingleRecentEvent from "./SingleRecentEvent";
 import SingleRecommended from "./SingleRecommended";
 import SingleTicket from "./SingleTicket";
@@ -19,5 +20,6 @@ export {
   FormItem,
   FormSelectItem,
   CheckoutForm,
-  QuantityModal
+  QuantityModal,
+  RecentEvents,
 };
