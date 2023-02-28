@@ -116,16 +116,17 @@ export class EventService {
 
     const event = await this.eventRepo.findOne({
       where: { id: eventId },
-      loadRelationIds: true,
     });
+    console.log(body);
     if (!event) {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
-
     checkPermissions(event.createdById, userId);
 
     for (let item in body) {
-      event[item] = body[item];
+      if (event[item] !== body[item]) {
+        event[item] = body[item];
+      }
     }
 
     return this.eventRepo.save(event);

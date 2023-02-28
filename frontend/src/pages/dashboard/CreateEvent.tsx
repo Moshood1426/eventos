@@ -11,6 +11,7 @@ import {
 } from "../../store/event/event.action";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { eventActions } from "../../store/event/event.slice";
 
 const initialState = {
   category: "",
@@ -58,19 +59,25 @@ const CreateEvent = () => {
 
   useEffect(() => {
     if (editEvent) {
-      const newFormData = {
-        category: singleEvent.category,
-        title: singleEvent.title,
-        date: singleEvent.date,
-        description: singleEvent.description,
-        venue: singleEvent.venue,
-        location: singleEvent.location,
-        price: singleEvent.price!.toString(),
-        capacity: singleEvent.capacity!.toString(),
-        host: singleEvent.host,
-      };
-      setFormData((prevValue) => ({ ...prevValue, ...newFormData }));
-      setEventEditId(singleEvent.id);
+      if (!singleEvent.id) {
+        dispatch(eventActions.setEditEvent(false));
+      } else {
+        const date = new Date(singleEvent.date).toISOString().substring(0, 16);
+
+        const newFormData = {
+          category: singleEvent.category,
+          title: singleEvent.title,
+          date: date,
+          description: singleEvent.description,
+          venue: singleEvent.venue,
+          location: singleEvent.location,
+          price: singleEvent.price!.toString(),
+          capacity: singleEvent.capacity!.toString(),
+          host: singleEvent.host,
+        };
+        setFormData((prevValue) => ({ ...prevValue, ...newFormData }));
+        setEventEditId(singleEvent.id);
+      }
     }
   }, [editEvent]);
 
@@ -81,9 +88,11 @@ const CreateEvent = () => {
   ) => {
     const name = event.target.name;
     const value = event.target.value;
+
     setFormData((prevValue) => ({ ...prevValue, [name]: value }));
   };
 
+  //handle changes on image input
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files) {
       setImageName("");
@@ -92,6 +101,7 @@ const CreateEvent = () => {
     setImageName(event.target.files[0].name);
   };
 
+  //handles form submit
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     //@ts-ignore
@@ -109,11 +119,17 @@ const CreateEvent = () => {
 
     //if user wants to edit details event without new image
     if (editEvent && !fileUploaded) {
-      const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
+      const date = moment(formData.date).format("LLL");
       formInfo.set("date", date);
 
+      let userData = {}; // creates a user json
+      formInfo.forEach(function (value, key) {
+        //@ts-ignore
+        userData[key] = value; // populates user json with form data
+      });
+
       const eventId = await dispatch(
-        execEditEvent(formData as unknown as HTMLFormElement, eventEditId!)
+        execEditEvent(userData as unknown as HTMLFormElement, eventEditId!)
       );
       if (eventId) {
         navigate(`/single-event/${eventId}`);
@@ -128,13 +144,18 @@ const CreateEvent = () => {
     }
 
     formInfo.append("image", fileUploaded);
-    const date = moment(formData.date).format("MMMM Do YYYY, h:mm a");
+    const date = moment(formData.date).format("LLL");
     formInfo.set("date", date);
 
     let eventId: number | false;
     if (editEvent) {
+      let userData = {}; // creates a user json
+      formInfo.forEach(function (value, key) {
+        //@ts-ignore
+        userData[key] = value; // populates user json with form data
+      });
       eventId = await dispatch(
-        execEditEvent(formData as unknown as HTMLFormElement, eventEditId!)
+        execEditEvent(userData as unknown as HTMLFormElement, eventEditId!)
       );
     } else {
       eventId = await dispatch(
@@ -256,6 +277,9 @@ const CreateEvent = () => {
           <button className="btn form_btn" type="submit">
             Submit {editEvent && " Changes"}
           </button>
+          <span className="clr_form">
+            Clear Form
+          </span>
         </div>
       </form>
     </div>
