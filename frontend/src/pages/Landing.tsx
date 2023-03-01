@@ -7,11 +7,15 @@ import { SingleRecommended } from "../components";
 import Marquee from "react-fast-marquee";
 import { RiCalendarEventLine } from "react-icons/ri";
 import { reccommendedData, categories } from "../utils/data";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const Landing = () => {
   const overlayRef = useRef(null);
   const [categoryImg, setCategoryImg] = useState(Recent1);
   const [activeCategoryId, setActiveCategoryId] = useState(1);
+  const [isActive, setIsActive] = useState([2, 3]);
+
+  gsap.registerPlugin(ScrollTrigger);
 
   useEffect(() => {
     const category = categories.find((item) => item.id === activeCategoryId);
@@ -48,9 +52,21 @@ const Landing = () => {
       })
       .to(".intro_sub_header", {
         autoAlpha: 1,
-        y: "10px",
+        y: 10,
       });
   }, [overlayRef]);
+
+  useEffect(() => {
+    gsap.from(".creator_content", {
+      y: 30,
+      autoAlpha: 0,
+      scrollTrigger: {
+        trigger: ".creator_content",
+        start: "top 70%",
+        toggleActions: "restart none none reverse",
+      },
+    });
+  }, []);
 
   return (
     <div className="landing">
@@ -126,7 +142,12 @@ const Landing = () => {
               <SingleRecommended
                 key={item.id}
                 {...item}
-                active={item.id === 2 || item.id === 3 ? true : false}
+                active={isActive.includes(item.id) ? true : false}
+                onHover={() =>
+                  item.id === 2 || item.id === 3
+                    ? setIsActive([2, 3])
+                    : setIsActive([1, 4])
+                }
               />
             );
           })}
@@ -134,7 +155,7 @@ const Landing = () => {
       </div>
 
       <div className="creator">
-        <p>
+        <p className="creator_content">
           You can also put your events out there for our exciting visitiors.
         </p>
         <button className="btn">Become a creator</button>

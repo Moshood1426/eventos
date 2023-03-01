@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as RightArrow } from "../assets/images/arrow-right.svg";
 
 interface SingleRecommendedProps {
@@ -6,11 +6,20 @@ interface SingleRecommendedProps {
   img: any;
   category: any;
   active: boolean;
+  onHover: () => any;
 }
 
 const SingleRecommended: React.FC<SingleRecommendedProps> = (props) => {
+  
+  useEffect(() => {
+
+  }, [])
+
   return (
-    <div className={`single_recommended ${props.active && "span2"}`}>
+    <div
+      className={`single_recommended ${props.active && "span2"}`}
+      onMouseEnter={() => props.onHover()}
+    >
       <div
         className={`single_recommended_overlay ${
           props.active && "overlay_dark"
