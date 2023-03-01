@@ -4,16 +4,16 @@ import { useAppSelector } from "../store/hooks";
 
 const NavMenu = () => {
   const consumerActions = [
-    { id: 1, title: "Marketplace", to: "/" },
+    { id: 1, title: "Marketplace", to: "/all-events" },
     { id: 2, title: "Favorites", to: "/favorites" },
-    { id: 3, title: "My Tickets", to: "/my-tickets" },
+    { id: 3, title: "My Tickets", to: "/" },
     { id: 4, title: "Profile", to: "/profile" },
   ];
 
   const creatorActions = [
-    { id: 1, title: "Stats", to: "/" },
+    // { id: 1, title: "Stats", to: "/stats" },
     { id: 2, title: "Create Event", to: "/create-event" },
-    { id: 3, title: "My Events", to: "/my-events" },
+    { id: 3, title: "My Events", to: "/" },
     { id: 4, title: "Profile", to: "/profile" },
   ];
 

@@ -46,7 +46,7 @@ export class EventService {
   }
 
   //get all events
-  async getAll(query: Partial<GetEventQueryDto>, favId: number) {
+  async getAll(query: Partial<GetEventQueryDto>, favId: number | null) {
     const { price, category, date, location, userId } = query;
 
     let result;

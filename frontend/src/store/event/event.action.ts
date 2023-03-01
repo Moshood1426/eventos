@@ -38,7 +38,7 @@ export const getAllEvents = () => {
     const userId = user?.id;
     try {
       const { data } = await authFetch.get<EventInst[]>(
-        `/event?userId=${userId}`
+        `/event?userId=${userId ? userId : ""}`
       );
 
       const result = data.map((item) => {

@@ -4,11 +4,11 @@ import { Navbar } from "../../components";
 import { Outlet } from "react-router-dom";
 import { NavMenu } from "../../components"
 
-const SharedLayout = () => {
+const SharedLayout:React.FC<{displayNavMenu?: boolean}> = ({displayNavMenu}) => {
   return (
     <div>
       <Navbar />
-      <NavMenu />
+      {displayNavMenu && <NavMenu />}
       <div className="outlet-container">
         <Outlet />
       </div>

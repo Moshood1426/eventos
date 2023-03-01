@@ -17,6 +17,7 @@ import {
   PaymentConfirm,
 } from "./pages";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useAppSelector } from "./store/hooks";
 
 // const router = createBrowserRouter([
 //   {
@@ -26,26 +27,36 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // ]);
 
 function App() {
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <Router>
       <Routes>
         <Route path="/landing" element={<Landing />} />
         <Route path="/register" element={<Register />} />
 
+        <Route path="/all-events" element={<SharedLayout />}>
+          <Route index element={<AllTickets />} />
+        </Route>
+
+        <Route path="/single-event/:eventId" element={<SharedLayout />}>
+          <Route index element={<SingleEventPage />} />
+        </Route>
+
         <Route
           path="/"
           element={
             <ProtectedRoute>
-              <SharedLayout />
+              <SharedLayout displayNavMenu={true} />
             </ProtectedRoute>
           }
         >
-          <Route index element={<AllTickets />} />
-          <Route path="single-event/:eventId" element={<SingleEventPage />} />
+          {user?.role === "consumer" ? (
+            <Route index element={<MyTickets />} />
+          ) : (
+            <Route index element={<MyEvents />} />
+          )}
           <Route path="create-event" element={<CreateEvent />} />
           <Route path="favorites" element={<Favorites />} />
-          <Route path="my-events" element={<MyEvents />} />
-          <Route path="my-tickets" element={<MyTickets />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="checkout-success" element={<PaymentConfirm />} />

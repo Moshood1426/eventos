@@ -8,9 +8,9 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user } = useAppSelector((state) => state.auth);
 
-//   if (!user) {
-//     return <Navigate to="/" />;
-//   }
+  if (!user) {
+    return <Navigate to="/register" />;
+  }
 
   return <>{children}</>;
 };

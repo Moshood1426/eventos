@@ -8,12 +8,15 @@ import Marquee from "react-fast-marquee";
 import { RiCalendarEventLine } from "react-icons/ri";
 import { reccommendedData, categories } from "../utils/data";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
   const overlayRef = useRef(null);
   const [categoryImg, setCategoryImg] = useState(Recent1);
   const [activeCategoryId, setActiveCategoryId] = useState(1);
   const [isActive, setIsActive] = useState([2, 3]);
+
+  const navigate = useNavigate()
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -85,7 +88,7 @@ const Landing = () => {
           <h1 className="intro_header">
             Let’s get you a seat at that amazing event
           </h1>
-          <p className="intro_sub_header">
+          <p className="intro_sub_header" onClick={() => navigate("/all-events")}>
             Start exploring event
             <ReactLogo />
           </p>

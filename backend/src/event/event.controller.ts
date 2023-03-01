@@ -54,8 +54,11 @@ export class EventController {
 
   @Get('')
   async getAllEvents(@Query() query: Partial<GetEventQueryDto>) {
-    const favId = await this.favService.getUserFavId(+query.userId);
-    return this.eventService.getAll(query, favId);
+    if (query.userId) {
+      const favId = await this.favService.getUserFavId(+query.userId);
+      return this.eventService.getAll(query, favId);
+    }
+    return this.eventService.getAll(query, null);
   }
 
   @AuthenticateUser()

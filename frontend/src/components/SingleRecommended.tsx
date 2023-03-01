@@ -1,3 +1,4 @@
+import gsap from "gsap";
 import React, { useEffect } from "react";
 import { ReactComponent as RightArrow } from "../assets/images/arrow-right.svg";
 
@@ -10,10 +11,12 @@ interface SingleRecommendedProps {
 }
 
 const SingleRecommended: React.FC<SingleRecommendedProps> = (props) => {
-  
   useEffect(() => {
-
-  }, [])
+    // gsap.from(".span2", {
+    //   clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
+    //   autoAlpha: 0,
+    // });
+  }, []);
 
   return (
     <div

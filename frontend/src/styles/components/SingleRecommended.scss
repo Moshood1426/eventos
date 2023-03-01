@@ -33,15 +33,18 @@
       color: $white;
       margin: 0;
       margin-bottom: 0.8rem;
+      transition: $transition;
     }
 
     &_category {
       color: $grey-400;
+      transition: $transition;
     }
 
     p {
       display: flex;
       align-items: center;
+      transition: $transition;
 
       svg {
         margin-left: 1rem;
