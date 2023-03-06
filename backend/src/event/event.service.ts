@@ -9,7 +9,7 @@ import { AuthEntity } from 'src/auth/auth.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { UserPayloadDto } from 'src/auth/dto/user_payload.dto';
 import { checkPermissions } from 'src/utils/checkPermissions';
-import { Repository } from 'typeorm';
+import { FindOperator, LessThanOrEqual, Like, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create_event.dto';
 import { GetEventQueryDto } from './dto/get_event_query.dto';
 import { Event } from './event.entity';
@@ -29,7 +29,6 @@ export class EventService {
   }) {
     //solve issue of saving image on failed request
     const { file, user, body } = ctx;
-
     if (user.role !== 'creator') {
       throw new UnauthorizedException('user cannot create event');
     }
@@ -47,11 +46,33 @@ export class EventService {
 
   //get all events
   async getAll(query: Partial<GetEventQueryDto>, favId: number | null) {
-    const { price, category, date, location, userId } = query;
+    const { price, category, date, title, userId } = query;
+    let queryObj: {
+      price?: FindOperator<number>;
+      title?: FindOperator<string>;
+      category?: string;
+      date?: string;
+    } = {};
+
+    if (price) {
+      queryObj.price = LessThanOrEqual(price);
+    }
+    if (title) {
+      queryObj.title = Like(`%${title}%`);
+    }
+    if (category) {
+      const newCategory = category.replace('_', '&');
+      console.log(newCategory)
+      queryObj[`category`] = newCategory;
+    }
+    if (date) {
+      queryObj.date = date;
+    }
 
     let result;
     if (favId) {
       const events = await this.eventRepo.find({
+        where: { ...queryObj },
         loadRelationIds: true,
       });
 
@@ -68,7 +89,7 @@ export class EventService {
         return item;
       });
     } else {
-      result = this.eventRepo.find();
+      result = this.eventRepo.find({ where: { ...queryObj } });
     }
 
     return result;

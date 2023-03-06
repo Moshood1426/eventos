@@ -1,16 +1,19 @@
 import gsap from "gsap";
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as RightArrow } from "../assets/images/arrow-right.svg";
 
 interface SingleRecommendedProps {
-  title: any;
+  title: string;
   img: any;
-  category: any;
+  category: string;
   active: boolean;
   onHover: () => any;
 }
 
 const SingleRecommended: React.FC<SingleRecommendedProps> = (props) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     // gsap.from(".span2", {
     //   clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
@@ -20,12 +23,12 @@ const SingleRecommended: React.FC<SingleRecommendedProps> = (props) => {
 
   return (
     <div
-      className={`single_recommended ${props.active && "span2"}`}
+      className={`single_recommended ${props.active ? "span2" : ""}`}
       onMouseEnter={() => props.onHover()}
     >
       <div
         className={`single_recommended_overlay ${
-          props.active && "overlay_dark"
+          props.active ? "overlay_dark_rd" : ""
         }`}
       ></div>
       <div className="single_recommended_img">

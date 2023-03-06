@@ -9,6 +9,7 @@ import RecentEvents from "./RecentEvents";
 import SingleRecentEvent from "./SingleRecentEvent";
 import SingleRecommended from "./SingleRecommended";
 import SingleTicket from "./SingleTicket";
+import Footer from "./Footer";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   CheckoutForm,
   QuantityModal,
   RecentEvents,
+  Footer
 };

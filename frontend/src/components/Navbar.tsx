@@ -3,8 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signOut, toggleClientIsUser } from "../store/auth/auth.actions";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { BiSearchAlt2 } from "react-icons/bi";
 
 const Navbar: React.FC = () => {
+  const [searchValue, setSearchValue] = useState("");
   const [displayLogout, setDisplayLogout] = useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
@@ -26,7 +28,7 @@ const Navbar: React.FC = () => {
   return (
     <nav className="nav">
       <div className="nav_container">
-        <Link to="/" className="nav_logo">
+        <Link to="/landing" className="nav_logo">
           <span>eventos</span>
         </Link>
         {user ? (
@@ -55,11 +57,17 @@ const Navbar: React.FC = () => {
         ) : (
           <>
             <div className="nav_items">
-              <div>
+              <div className="nav_items_search">
                 <input
                   type="text"
                   placeholder="search for an event"
                   className="form_input nav_form_input"
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                />
+                <BiSearchAlt2
+                  className="search_icon"
+                  onClick={() => navigate(`/all-events?title=${searchValue}`)}
                 />
               </div>
 

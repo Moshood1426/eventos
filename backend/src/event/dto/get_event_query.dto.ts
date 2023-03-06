@@ -9,14 +9,13 @@ export class GetEventQueryDto {
   @Type(() => Number)
   price: number;
 
-  @IsNumber()
-  @Type(() => Number)
-  date: number;
+  @IsString()
+  date: string;
 
   @IsNumber()
   @Type(() => Number)
   userId: number;
 
   @IsString()
-  location: string;
+  title: string;
 }

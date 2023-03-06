@@ -1,6 +1,8 @@
 import gsap from "gsap";
 import React, { useState, useEffect } from "react";
 import { ReactComponent as ReactLogo } from "../assets/images/arrow-right.svg";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useNavigate } from "react-router-dom";
 
 interface SingleRecentEventProps {
   title: string;
@@ -11,6 +13,10 @@ interface SingleRecentEventProps {
 const SingleRecentEvent: React.FC<SingleRecentEventProps> = (props) => {
   const [displayExtraContent, setDisplayExtraContent] = useState(false);
 
+  const navigate = useNavigate();
+
+  gsap.registerPlugin(ScrollTrigger);
+
   useEffect(() => {
     if (displayExtraContent) {
       const tl = gsap.timeline();
@@ -18,7 +24,7 @@ const SingleRecentEvent: React.FC<SingleRecentEventProps> = (props) => {
         clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)",
         duration: 0.45,
         autoAlpha: 0,
-        ease: "Power2.inOut"
+        ease: "Power2.inOut",
       })
         .from(".single_recent_event_date", {
           y: -7.5,
@@ -38,6 +44,7 @@ const SingleRecentEvent: React.FC<SingleRecentEventProps> = (props) => {
       className="single_recent_event"
       onMouseEnter={() => setDisplayExtraContent(true)}
       onMouseLeave={() => setDisplayExtraContent(false)}
+      onClick={() => navigate("/all-events")}
     >
       <div className="single_recent_event_img">
         <img src={props.img} alt={props.title} />

@@ -8,6 +8,7 @@ import Alert from "../../components/Alert";
 import {
   createEvent,
   editEvent as execEditEvent,
+  setEditEvent,
 } from "../../store/event/event.action";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
@@ -168,6 +169,11 @@ const CreateEvent = () => {
     }
   };
 
+  const clearForm = () => {
+    setFormData(initialState);
+    dispatch(setEditEvent(false));
+  };
+
   return (
     <div>
       <div className="register_img">
@@ -274,10 +280,10 @@ const CreateEvent = () => {
         </div>
 
         <div className="form_dual_row">
-          <button className="btn form_btn" type="submit">
+          <button className="btn submit_form" type="submit">
             Submit {editEvent && " Changes"}
           </button>
-          <span className="clr_form">
+          <span className="btn clr_form" onClick={() => clearForm()}>
             Clear Form
           </span>
         </div>

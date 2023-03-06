@@ -30,10 +30,10 @@ const reccommendedData = [
 ];
 
 const categories = [
-  { id: 1, title: "Football events", img: Recent2 },
-  { id: 2, title: "Conference Meetings", img: Recent3 },
-  { id: 3, title: "Banquets and Parties", img: Recent1 },
-  { id: 4, title: "Music Concerts", img: Recent3 },
+  { id: 1, title: "Banquets & Parties", img: Recent1, category: "Fashion" },
+  { id: 2, title: "Music Concerts", img: Recent3, category: "Music" },
+  { id: 3, title: "Science & Tech", img: Recent2, category: "Health" },
+  { id: 4, title: "Conference Meetings", img: Recent3, category: "Business" },
 ];
 
 export { categories, reccommendedData };

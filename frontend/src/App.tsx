@@ -34,11 +34,22 @@ function App() {
         <Route path="/landing" element={<Landing />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/all-events" element={<SharedLayout />}>
+        <Route
+          path="/all-events"
+          element={<SharedLayout displayNavMenu={user ? true : false} />}
+        >
           <Route index element={<AllTickets />} />
         </Route>
 
-        <Route path="/single-event/:eventId" element={<SharedLayout />}>
+        <Route
+          path="/single-event/:eventId"
+          element={
+            <SharedLayout
+              displayNavMenu={user ? true : false}
+              displayFooter={true}
+            />
+          }
+        >
           <Route index element={<SingleEventPage />} />
         </Route>
 

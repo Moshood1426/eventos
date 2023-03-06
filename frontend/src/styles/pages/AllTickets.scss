@@ -17,6 +17,12 @@
       order: 2;
       min-width: 200px;
       //border: red solid 1px;
+
+      .form_input {
+        box-shadow: none;
+        border: none;
+        border-bottom: 1px solid $primary-300;
+      }
     }
   }
 

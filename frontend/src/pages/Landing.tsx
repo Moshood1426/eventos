@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Navbar, RecentEvents } from "../components";
+import { Footer, Navbar, RecentEvents } from "../components";
 import { ReactComponent as ReactLogo } from "../assets/images/arrow-right.svg";
 import gsap from "gsap";
 import Recent1 from "../assets/images/recent1.jpg";
@@ -14,11 +14,25 @@ const Landing = () => {
   const overlayRef = useRef(null);
   const [categoryImg, setCategoryImg] = useState(Recent1);
   const [activeCategoryId, setActiveCategoryId] = useState(1);
-  const [isActive, setIsActive] = useState([2, 3]);
+  const [isActive, setIsActive] = useState([1, 4]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   gsap.registerPlugin(ScrollTrigger);
+
+  useEffect(() => {
+    gsap.to(".landing", { visibility: "visible" });
+
+    gsap.from(".creator_content", {
+      y: 30,
+      autoAlpha: 0,
+      scrollTrigger: {
+        trigger: ".creator_content",
+        start: "top 70%",
+        toggleActions: "restart none none reverse",
+      },
+    });
+  }, []);
 
   useEffect(() => {
     const category = categories.find((item) => item.id === activeCategoryId);
@@ -46,30 +60,18 @@ const Landing = () => {
     const tl = gsap.timeline();
     tl.to(overlayRef.current, {
       height: "0%",
-      duration: "1.1",
+      duration: ".85",
       ease: "power1.inOut",
     })
       .to(".intro_header", {
         clipPath: "polygon(0 100%, 100% 100%, 100% 0, 0 0)",
-        duration: "1.3",
+        duration: ".85",
       })
       .to(".intro_sub_header", {
         autoAlpha: 1,
         y: 10,
       });
   }, [overlayRef]);
-
-  useEffect(() => {
-    gsap.from(".creator_content", {
-      y: 30,
-      autoAlpha: 0,
-      scrollTrigger: {
-        trigger: ".creator_content",
-        start: "top 70%",
-        toggleActions: "restart none none reverse",
-      },
-    });
-  }, []);
 
   return (
     <div className="landing">
@@ -88,7 +90,10 @@ const Landing = () => {
           <h1 className="intro_header">
             Let’s get you a seat at that amazing event
           </h1>
-          <p className="intro_sub_header" onClick={() => navigate("/all-events")}>
+          <p
+            className="intro_sub_header"
+            onClick={() => navigate("/all-events")}
+          >
             Start exploring event
             <ReactLogo />
           </p>
@@ -117,12 +122,15 @@ const Landing = () => {
             <ul>
               {categories.map((item) => {
                 return (
-                  <div className="category_list_item">
+                  <div className="category_list_item" key={item.id}>
                     <li
                       key={item.id}
                       className={item.id === activeCategoryId ? "active" : ""}
                       onMouseEnter={() => setActiveCategoryId(item.id)}
-                      onMouseLeave={() => setActiveCategoryId(1)}
+                      onClick={() =>
+                        navigate(`/all-events?category=${item.category}`)
+                      }
+                      // onMouseLeave={() => setActiveCategoryId(1)}
                     >
                       {item.title}
                     </li>
@@ -161,17 +169,12 @@ const Landing = () => {
         <p className="creator_content">
           You can also put your events out there for our exciting visitiors.
         </p>
-        <button className="btn">Become a creator</button>
+        <button className="btn" onClick={() => navigate("/register")}>
+          Become a creator
+        </button>
       </div>
 
-      <div className="footer">
-        <div className="footer_container">
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

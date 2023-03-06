@@ -7,12 +7,17 @@ import { AuthEntity } from './auth/auth.entity';
 import { EventModule } from './event/event.module';
 import { Event } from './event/event.entity';
 import { SalesModule } from './sales/sales.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Sales } from './sales/sales.entity';
 import { FavoritesModule } from './favorites/favorites.module';
 import { Favorites } from './favorites/favorites.entity';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env.prod',
+    }),
     AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',

@@ -1,10 +1,13 @@
 import React from "react";
-import { Navbar } from "../../components";
+import { Footer, Navbar } from "../../components";
 // import actions from "../../utils/actions";
 import { Outlet } from "react-router-dom";
-import { NavMenu } from "../../components"
+import { NavMenu } from "../../components";
 
-const SharedLayout:React.FC<{displayNavMenu?: boolean}> = ({displayNavMenu}) => {
+const SharedLayout: React.FC<{
+  displayNavMenu?: boolean;
+  displayFooter?: boolean;
+}> = ({ displayNavMenu, displayFooter }) => {
   return (
     <div>
       <Navbar />
@@ -12,6 +15,7 @@ const SharedLayout:React.FC<{displayNavMenu?: boolean}> = ({displayNavMenu}) => 
       <div className="outlet-container">
         <Outlet />
       </div>
+      {displayFooter && <Footer />}
     </div>
   );
 };

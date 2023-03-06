@@ -34,30 +34,9 @@ const SingleEventPage = () => {
   const deleteEvent = async (eventId: number) => {
     const result = await dispatch(execDeleteEvent(eventId));
     if (result) {
-      navigate("/my-events");
+      navigate("/");
     }
   };
-
-  const recentEventData = [
-    {
-      id: 1,
-      title: "French Embassy Concerts & Wine Reception",
-      date: "Fri, Feb 3, 7:00pm",
-      img: Recent1,
-    },
-    {
-      id: 2,
-      title: "England Embassy Concerts & Wine Reception",
-      date: "Fri, Feb 3, 7:00pm",
-      img: Recent2,
-    },
-    {
-      id: 3,
-      title: "Uruguay Embassy Concerts & Wine Reception",
-      date: "Fri, Feb 3, 7:00pm",
-      img: Recent3,
-    },
-  ];
 
   const { eventId } = useParams();
 
@@ -108,7 +87,9 @@ const SingleEventPage = () => {
 
   return (
     <div className="single_ticketPg">
-      {selectQuantity && <QuantityModal />}
+      {selectQuantity && (
+        <QuantityModal toggleSelectQty={() => setSelectQuantity(false)} />
+      )}
       <div className="single_ticketPg_header">
         <div>
           <h4 className="single_ticketPg_title">{singleEvent.title}</h4>
@@ -177,14 +158,14 @@ const SingleEventPage = () => {
         <button className="btn">Become a creator</button>
       </div>
 
-      <div className="footer">
+      {/* <div className="footer">
         <div className="footer_container">
           <span>Thanks for checking out our events</span>
           <span>Thanks for checking out our events</span>
           <span>Thanks for checking out our events</span>
           <span>Thanks for checking out our events</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

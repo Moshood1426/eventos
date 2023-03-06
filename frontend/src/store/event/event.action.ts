@@ -7,6 +7,7 @@ import { invalidAction } from "../generalUI/generalUI.actions";
 import { selectUser } from "../auth/auth.slice";
 import store from "..";
 import moment from "moment";
+import { configureURL } from "../../utils/configureURL";
 
 export const createEvent = (formData: HTMLFormElement) => {
   return async (dispatch: any) => {
@@ -31,15 +32,23 @@ export const createEvent = (formData: HTMLFormElement) => {
   };
 };
 
-export const getAllEvents = () => {
+export const getAllEvents = (filterObj?: {
+  price: number;
+  category: string;
+  title: string;
+  date: string;
+}) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     const user = selectUser(store.getState());
     const userId = user?.id;
+    let url = `/event?userId=${userId ? userId : ""}`;
+    if (filterObj) {
+     url = configureURL(url, filterObj);
+    }
+
     try {
-      const { data } = await authFetch.get<EventInst[]>(
-        `/event?userId=${userId ? userId : ""}`
-      );
+      const { data } = await authFetch.get<EventInst[]>(url);
 
       const result = data.map((item) => {
         if (item.date === "1") {
@@ -194,3 +203,5 @@ export const deleteEvent = (eventId: number) => {
     }
   };
 };
+
+export const setEditEvent = eventActions.setEditEvent

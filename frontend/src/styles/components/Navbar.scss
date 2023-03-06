@@ -44,12 +44,26 @@
     font-size: $smallText;
     align-items: center;
 
-    @include media("<=tablet") {
-      display: none;
-    }
-
     p {
       margin: 0;
+    }
+
+    &_search {
+      display: flex;
+      align-items: center;
+
+      .search_icon {
+        background-color: $primary-300;
+        height: 30px;
+        font-size: 1.3rem;
+        cursor: pointer;
+        color: $primary-100;
+        // font-size: 40px;
+      }
+    }
+
+    @include media("<=tablet") {
+      display: none;
     }
   }
 

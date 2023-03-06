@@ -8,6 +8,7 @@
 @import "./components/SingleRecommended.scss";
 @import "./pages/register.scss";
 @import "./components/NavMenu.scss";
+@import "./components/Footer.scss";
 @import "./components/SingleTicket.scss";
 @import "./pages/MyTickets.scss";
 @import "./pages/AllTickets.scss";
@@ -270,7 +271,12 @@ a {
 }
 
 .clr_form {
-  border: red solid 1px;
+  text-align: center;
+  background: none;
+}
+
+.submit_form {
+  width: 100%;
 }
 
 // .container {

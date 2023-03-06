@@ -35,7 +35,7 @@ const SingleTicket: React.FC<SingleTicketProps> = (props) => {
         start: "top 80%",
       },
     });
-  });
+  }, []);
 
   const getSingleEvent = (id: number, date: string) => {
     navigate(`/single-event/${id}?date=${date}`);

@@ -48,7 +48,7 @@ export class EventController {
     if (file.size > maxSize) {
       throw new BadRequestException('File should be less than 4MB');
     }
-
+    
     return this.eventService.create({ file, user, body });
   }
 

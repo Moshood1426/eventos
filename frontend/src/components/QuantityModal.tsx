@@ -5,9 +5,12 @@ import FormItem from "./FormItem";
 import { checkout } from "../store/sales/sales.actions";
 import { useNavigate } from "react-router-dom";
 
-const QuantityModal = () => {
+const QuantityModal: React.FC<{ toggleSelectQty: () => void }> = ({
+  toggleSelectQty,
+}) => {
   const [quantity, setQuantity] = useState("1");
 
+  const { user } = useAppSelector((state) => state.auth)
   const { showAlert } = useAppSelector((state) => state.generalUI);
   const { singleEvent } = useAppSelector((state) => state.event);
   const { order } = useAppSelector((state) => state.sales);
@@ -22,6 +25,10 @@ const QuantityModal = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if(!user) {
+      navigate("/register")
+      return
+    }
     const eventId = singleEvent.id;
     const result = await dispatch(checkout(eventId, +quantity));
     if (result) {
@@ -31,7 +38,7 @@ const QuantityModal = () => {
 
   return (
     <div className="qty_modal">
-      <div className="qty_modal_bg"></div>
+      <div className="qty_modal_bg" onClick={() => toggleSelectQty()}></div>
       <div className="qty_modal_content">
         <h4 className="qty_modal_content_title">Before You Proceed...</h4>
         {showAlert && <Alert />}
