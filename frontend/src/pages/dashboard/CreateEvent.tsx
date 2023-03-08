@@ -274,6 +274,7 @@ const CreateEvent = () => {
               id="file_input"
               className="form_file_input"
               onChange={handleImageChange}
+              disabled={editEvent}
             />
             <span className="imgName">{imageName}</span>
           </label>

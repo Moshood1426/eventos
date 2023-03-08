@@ -20,9 +20,12 @@ const loginUser = (userInfo: { email: string; password: string }) => {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
-      const { data } = await axios.post<LoginUserResponse>("/auth/login", {
-        ...userInfo,
-      });
+      const { data } = await axios.post<LoginUserResponse>(
+        "/api/v1/auth/login",
+        {
+          ...userInfo,
+        }
+      );
 
       dispatch(generalUIActions.isLoadingCompleted());
       dispatch(authActions.login(data));
@@ -48,9 +51,12 @@ const registerUser = (userInfo: {
   return async (dispatch: any) => {
     dispatch(generalUIActions.isLoadingStarts());
     try {
-      const { data } = await axios.post<LoginUserResponse>("/auth/register", {
-        ...userInfo,
-      });
+      const { data } = await axios.post<LoginUserResponse>(
+        "/api/v1/auth/register",
+        {
+          ...userInfo,
+        }
+      );
 
       dispatch(generalUIActions.isLoadingCompleted());
       dispatch(authActions.login(data));

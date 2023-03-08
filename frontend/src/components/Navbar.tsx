@@ -8,6 +8,7 @@ import { BiSearchAlt2 } from "react-icons/bi";
 const Navbar: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [displayLogout, setDisplayLogout] = useState(false);
+  const [displayNavMenu, setDisplayNavMenu] = useState(false);
 
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -15,6 +16,15 @@ const Navbar: React.FC = () => {
   const userRef = useRef(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (displayNavMenu) {
+      gsap.from(".nav_menu_list", {
+        clipPath: "polygon(0 100%, 100% 100%, 100% 100%, 0 100%)",
+        autoAlpha: 0,
+      });
+    }
+  }, [displayNavMenu])
 
   useEffect(() => {
     if (displayLogout) {
@@ -82,7 +92,23 @@ const Navbar: React.FC = () => {
               </p>
             </div>
             <div className="nav_menu">
-              <span className="nav_menu__burger"></span>
+              {displayNavMenu && (
+                <div className="nav_menu_list">
+                  <p onClick={() => dispatch(toggleClientIsUser(false))}>
+                    <Link to="/register">Create an Event</Link>
+                  </p>
+                  <p onClick={() => dispatch(toggleClientIsUser(false))}>
+                    <Link to="/register">Register</Link>
+                  </p>
+                  <p onClick={() => dispatch(toggleClientIsUser(true))}>
+                    <Link to="/register">Log in</Link>
+                  </p>
+                </div>
+              )}
+              <span
+                className={`nav_menu__burger ${displayNavMenu && "open"}`}
+                onClick={() => setDisplayNavMenu((prevValue) => !prevValue)}
+              ></span>
             </div>
           </>
         )}

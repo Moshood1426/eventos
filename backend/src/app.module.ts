@@ -11,6 +11,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Sales } from './sales/sales.entity';
 import { FavoritesModule } from './favorites/favorites.module';
 import { Favorites } from './favorites/favorites.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -32,6 +34,9 @@ import { Favorites } from './favorites/favorites.entity';
     EventModule,
     SalesModule,
     FavoritesModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'frontend', 'build'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

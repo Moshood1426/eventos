@@ -4,6 +4,7 @@ import {
   SingleRecentEvent,
   QuantityModal,
   RecentEvents,
+  Footer,
 } from "../../components";
 import Recent1 from "../../assets/images/recent1.jpg";
 import Recent2 from "../../assets/images/recent2.jpg";
@@ -62,24 +63,15 @@ const SingleEventPage = () => {
             {showAlert && <Alert />}
             <p>Something went wrong, try again later</p>
           </div>
-
-          <RecentEvents />
         </div>
+
+        <RecentEvents />
 
         <div className="creator single_ticketPg_creator">
           <p>
             You can also put your events out there for our exciting visitiors.
           </p>
           <button className="btn">Become a creator</button>
-        </div>
-
-        <div className="footer">
-          <div className="footer_container">
-            <span>Thanks for checking out our events</span>
-            <span>Thanks for checking out our events</span>
-            <span>Thanks for checking out our events</span>
-            <span>Thanks for checking out our events</span>
-          </div>
         </div>
       </div>
     );
@@ -147,7 +139,7 @@ const SingleEventPage = () => {
         <img src={singleEvent.imgPath} alt="" />
       </div>
 
-      <div className="single_ticketPg_recent recent">
+      <div className="single_ticketPg_recent ">
         <RecentEvents />
       </div>
 
@@ -157,15 +149,6 @@ const SingleEventPage = () => {
         </p>
         <button className="btn">Become a creator</button>
       </div>
-
-      {/* <div className="footer">
-        <div className="footer_container">
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-          <span>Thanks for checking out our events</span>
-        </div>
-      </div> */}
     </div>
   );
 };

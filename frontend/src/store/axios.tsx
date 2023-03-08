@@ -1,15 +1,16 @@
 import axios from "axios";
 import store from ".";
+import { signOut } from "./auth/auth.actions";
 import { selectToken } from "./auth/auth.slice";
 // axios
 const authFetch = axios.create({
-  baseURL: "",
+  baseURL: "/api/v1",
 });
 // request
-const token = selectToken(store.getState());
 
 authFetch.interceptors.request.use(
   (config) => {
+    const token = selectToken(store.getState());
     config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
@@ -19,18 +20,18 @@ authFetch.interceptors.request.use(
 );
 // response
 
-// authFetch.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     // console.log(error.response)
-//     if (error.response.status === 401) {
-//       //   logoutUser();
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+authFetch.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // console.log(error.response)
+    if (error.response.status === 401) {
+      // store.dispatch(signOut())
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const handleAxiosError = (error: any): { message: string } => {
   console.log(error);

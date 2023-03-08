@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -13,6 +14,7 @@ import { FindOperator, LessThanOrEqual, Like, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create_event.dto';
 import { GetEventQueryDto } from './dto/get_event_query.dto';
 import { Event } from './event.entity';
+const fs = require('fs');
 
 @Injectable()
 export class EventService {
@@ -62,7 +64,7 @@ export class EventService {
     }
     if (category) {
       const newCategory = category.replace('_', '&');
-      console.log(newCategory)
+      console.log(newCategory);
       queryObj[`category`] = newCategory;
     }
     if (date) {
@@ -138,7 +140,7 @@ export class EventService {
     const event = await this.eventRepo.findOne({
       where: { id: eventId },
     });
-    console.log(body);
+  
     if (!event) {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
@@ -159,14 +161,20 @@ export class EventService {
       where: { id: eventId },
       loadRelationIds: true,
     });
-
     if (!event) {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
     checkPermissions(event.createdById, userId);
-
+    const imgLink = event.imgPath;
     //remove event image
     await this.eventRepo.remove(event);
+
+    fs.unlink(imgLink, (err: Error) => {
+      if (err) {
+        throw new BadRequestException('Something went wrong');
+      }
+    });
+
     return { msg: 'Event deleted succesfully' };
   }
 }
