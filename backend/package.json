@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "setup-production": "npm run install-client && npm run build-client && npm install --save && npm run build",
+    "setup-production": "npm run install-client && npm run build-client && npm install --save",
     "install-client": "cd .. && cd frontend && npm install --save",
     "build-client": "cd .. && cd frontend && npm run build",
     "build": "nest build",

@@ -1,0 +1,1 @@
+{"version":3,"file":"checkPermissions.js","sourceRoot":"","sources":["../../src/utils/checkPermissions.ts"],"names":[],"mappings":";;;AAAA,2CAAuD;AAEvD,SAAgB,gBAAgB,CAC9B,aAAqB,EACrB,cAAsB;IAEtB,IAAI,aAAa,KAAK,cAAc,EAAE;QACpC,MAAM,IAAI,8BAAqB,CAAC,4CAA4C,CAAC,CAAC;KAC/E;IAED,OAAO;AACT,CAAC;AATD,4CASC"}
