@@ -9,7 +9,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { user } = useAppSelector((state) => state.auth);
 
   if (!user) {
-    return <Navigate to="/register" />;
+    return <Navigate to="/landing" />;
   }
 
   return <>{children}</>;

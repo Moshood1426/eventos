@@ -71,6 +71,7 @@
   margin: 0 auto;
   max-width: $maxWidth;
   padding-top: 2.3rem;
+  min-height: 100vh;
 }
 
 @include media(">=phone") {

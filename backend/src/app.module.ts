@@ -13,27 +13,27 @@ import { FavoritesModule } from './favorites/favorites.module';
 import { Favorites } from './favorites/favorites.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { config } from './config';
+import { DatabaseConfig } from './database.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.prod',
+      load: [config],
     }),
     AuthModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Badmantons10',
-      database: 'eventos',
-      synchronize: true,
-      entities: [AuthEntity, Event, Sales, Favorites],
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: DatabaseConfig,
     }),
     EventModule,
     SalesModule,
     FavoritesModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname,"..", 'public', 'uploads'),
+      renderPath: "/images"
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', '..', 'frontend', 'build'),
     }),

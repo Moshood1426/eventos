@@ -32,6 +32,17 @@ const Landing = () => {
         toggleActions: "restart none none reverse",
       },
     });
+
+    gsap.from(".category_list_item", {
+      y: 30,
+      autoAlpha: 0,
+      stagger: .1,
+      scrollTrigger: {
+        trigger: ".category_list_item",
+        start: "top 70%",
+        toggleActions: "restart none none reverse",
+      },
+    });
   }, []);
 
   useEffect(() => {

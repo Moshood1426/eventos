@@ -4,6 +4,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import path from 'path';
 import { AuthEntity } from 'src/auth/auth.entity';
@@ -14,6 +15,7 @@ import { FindOperator, LessThanOrEqual, Like, Repository } from 'typeorm';
 import { CreateEventDto } from './dto/create_event.dto';
 import { GetEventQueryDto } from './dto/get_event_query.dto';
 import { Event } from './event.entity';
+const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 
 @Injectable()
@@ -21,6 +23,7 @@ export class EventService {
   constructor(
     @InjectRepository(Event) private readonly eventRepo: Repository<Event>,
     private readonly authService: AuthService,
+    private configService: ConfigService,
   ) {}
 
   //create event
@@ -36,13 +39,29 @@ export class EventService {
     }
     const userInstance = await this.authService.getUser(user.userId);
 
+    cloudinary.config({
+      cloud_name: this.configService.get('CLOUD_NAME'),
+      api_key: this.configService.get('CLOUD_API_KEY'),
+      api_secret: this.configService.get('CLOUD_API_SECRET'),
+    });
+
+    const imgURL = await cloudinary.uploader.upload(file.path, {
+      use_filename: true,
+      folder: 'eventos-app',
+    });
+
     const event = this.eventRepo.create({
       ...body,
-      imgPath: file.path,
+      imgPath: imgURL.secure_url,
       createdBy: userInstance,
       createdById: user.userId,
     });
 
+    fs.unlink(file.path, (err: Error) => {
+      if (err) {
+        throw new BadRequestException('Something went wrong');
+      }
+    });
     return this.eventRepo.save(event);
   }
 
@@ -140,7 +159,7 @@ export class EventService {
     const event = await this.eventRepo.findOne({
       where: { id: eventId },
     });
-  
+
     if (!event) {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
