@@ -32,7 +32,7 @@ const Register = () => {
   const [formData, setFormData] = useState(initialState);
 
   const { user, clientIsUser } = useAppSelector((state) => state.auth);
-  const { showAlert } = useAppSelector((state) => state.generalUI);
+  const { showAlert, isLoading } = useAppSelector((state) => state.generalUI);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ const Register = () => {
             onChange={handleChange}
           />
           <div className="form_dual_row">
-            <button className="btn form_btn" type="submit">
+            <button className="btn form_btn" type="submit" disabled={isLoading}>
               Submit
             </button>
           </div>

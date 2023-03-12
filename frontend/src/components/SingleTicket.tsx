@@ -32,7 +32,7 @@ const SingleTicket: React.FC<SingleTicketProps> = (props) => {
       stagger: 1,
       scrollTrigger: {
         trigger: ticketRef.current,
-        start: "top 80%",
+        start: "top 90%",
       },
     });
   }, []);

@@ -92,12 +92,6 @@ const AllTickets = () => {
               dontLabel={true}
             />
             <FormItem
-              name="date"
-              type="datetime-local"
-              value={formData.date}
-              onChange={handleChange}
-            />
-            <FormItem
               name="title"
               type="text"
               value={formData.title}
@@ -110,6 +104,13 @@ const AllTickets = () => {
               value={formData.price}
               onChange={handleChange}
               placeholder={"Max Event price - $"}
+            />
+             <FormItem
+              name="date"
+              type="datetime-local"
+              value={formData.date}
+              onChange={handleChange}
+              placeholder={"Select a date"}
             />
           </form>
         </div>
