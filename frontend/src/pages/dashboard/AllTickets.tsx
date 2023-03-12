@@ -83,7 +83,7 @@ const AllTickets = () => {
       <div className="tickets_container">
         <div className="tickets_filter">
           <h5>Filters</h5>
-          <form>
+          <form className="tickets_filter_form">
             <FormSelectItem
               name="category"
               onChange={handleChange}
@@ -98,6 +98,7 @@ const AllTickets = () => {
               onChange={handleChange}
               placeholder={"event name"}
             />
+
             <FormItem
               name="price"
               type="number"
@@ -105,7 +106,7 @@ const AllTickets = () => {
               onChange={handleChange}
               placeholder={"Max Event price - $"}
             />
-             <FormItem
+            <FormItem
               name="date"
               type="datetime-local"
               value={formData.date}

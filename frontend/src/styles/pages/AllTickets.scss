@@ -10,6 +10,17 @@
   display: grid;
   gap: 2rem;
 
+  .tickets_filter_form {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    @include media("<=tablet") {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+    }
+  }
+
   @include media(">=tablet") {
     grid-template-columns: 1fr auto;
 
