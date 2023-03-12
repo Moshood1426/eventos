@@ -17,7 +17,7 @@
     @include media("<=tablet") {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1em;
+      column-gap: 1em;
     }
   }
 
