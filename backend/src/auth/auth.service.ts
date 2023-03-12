@@ -14,8 +14,6 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserPayloadDto } from './dto/user_payload.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { Event } from 'src/event/event.entity';
-import { FavoritesService } from 'src/favorites/favorites.service';
 
 @Injectable()
 export class AuthService {
