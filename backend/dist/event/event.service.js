@@ -137,13 +137,7 @@ let EventService = class EventService {
             throw new common_1.NotFoundException('event with id ' + eventId + ' not found');
         }
         (0, checkPermissions_1.checkPermissions)(event.createdById, userId);
-        const imgLink = event.imgPath;
         await this.eventRepo.remove(event);
-        fs.unlink(imgLink, (err) => {
-            if (err) {
-                throw new common_1.BadRequestException('Something went wrong');
-            }
-        });
         return { msg: 'Event deleted succesfully' };
     }
 };

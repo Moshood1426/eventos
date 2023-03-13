@@ -50,7 +50,7 @@ const CreateEvent = () => {
   const [imageName, setImageName] = useState("");
   const [eventEditId, setEventEditId] = useState<null | number>(null);
 
-  const { showAlert } = useAppSelector((state) => state.generalUI);
+  const { showAlert, isLoading } = useAppSelector((state) => state.generalUI);
   const { editEvent, singleEvent } = useAppSelector((state) => state.event);
   const dispatch = useAppDispatch();
 
@@ -281,7 +281,11 @@ const CreateEvent = () => {
         </div>
 
         <div className="form_dual_row">
-          <button className="btn submit_form" type="submit">
+          <button
+            className="btn submit_form"
+            type="submit"
+            disabled={isLoading}
+          >
             Submit {editEvent && " Changes"}
           </button>
           <span className="btn clr_form" onClick={() => clearForm()}>

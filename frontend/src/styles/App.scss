@@ -163,6 +163,7 @@ img {
     border: 1px solid $primary-300;
     color: $primary-600;
     font-family: $AirBnBLight;
+    font-size: 16px;
   }
 
   &_input,
@@ -191,6 +192,12 @@ img {
     box-shadow: $shadow-1;
     margin-bottom: 1.5rem;
   }
+}
+
+select,
+textarea,
+input {
+  font-size: 16px;
 }
 
 .form_input {
@@ -277,6 +284,10 @@ a {
 
 .submit_form {
   width: 100%;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 // .container {

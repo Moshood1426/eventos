@@ -184,16 +184,8 @@ export class EventService {
       throw new NotFoundException('event with id ' + eventId + ' not found');
     }
     checkPermissions(event.createdById, userId);
-    const imgLink = event.imgPath;
-    //remove event image
+
     await this.eventRepo.remove(event);
-
-    fs.unlink(imgLink, (err: Error) => {
-      if (err) {
-        throw new BadRequestException('Something went wrong');
-      }
-    });
-
     return { msg: 'Event deleted succesfully' };
   }
 }
