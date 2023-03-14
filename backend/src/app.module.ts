@@ -31,11 +31,10 @@ import { DatabaseConfig } from './database.config';
     SalesModule,
     FavoritesModule,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname,"..", 'public', 'uploads'),
-      renderPath: "/images"
+      rootPath: join(__dirname, '..', '..', 'frontend', 'build'),
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'frontend', 'build'),
+      rootPath: join(__dirname,"..", 'uploads'),
     }),
   ],
   controllers: [AppController],

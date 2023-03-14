@@ -19,9 +19,7 @@ const favorites_module_1 = require("../favorites/favorites.module");
 const path_1 = require("path");
 const imgPath = (0, path_1.join)(__dirname, '../../uploads');
 const fileStorage = (0, multer_1.diskStorage)({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
+    destination: imgPath,
     filename: (req, file, cb) => {
         cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
     },

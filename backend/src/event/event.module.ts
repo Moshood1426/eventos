@@ -12,9 +12,7 @@ import { join } from 'path';
 const imgPath = join(__dirname, '../../uploads');
 
 const fileStorage = diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
+  destination: imgPath,
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
   },

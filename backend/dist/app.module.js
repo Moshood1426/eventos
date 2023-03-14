@@ -38,11 +38,10 @@ AppModule = __decorate([
             sales_module_1.SalesModule,
             favorites_module_1.FavoritesModule,
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, "..", 'public', 'uploads'),
-                renderPath: "/images"
+                rootPath: (0, path_1.join)(__dirname, '..', '..', 'frontend', 'build'),
             }),
             serve_static_1.ServeStaticModule.forRoot({
-                rootPath: (0, path_1.join)(__dirname, '..', '..', 'frontend', 'build'),
+                rootPath: (0, path_1.join)(__dirname, "..", 'uploads'),
             }),
         ],
         controllers: [app_controller_1.AppController],
