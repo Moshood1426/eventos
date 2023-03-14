@@ -20,7 +20,7 @@ const path_1 = require("path");
 const imgPath = (0, path_1.join)(__dirname, '../../uploads');
 const fileStorage = (0, multer_1.diskStorage)({
     destination: (req, file, cb) => {
-        cb(null, imgPath);
+        cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
         cb(null, Math.floor(Math.random() * 109288) + file.originalname);

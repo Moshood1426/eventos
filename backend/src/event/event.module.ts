@@ -13,7 +13,7 @@ const imgPath = join(__dirname, '../../uploads');
 
 const fileStorage = diskStorage({
   destination: (req, file, cb) => {
-    cb(null, imgPath);
+    cb(null, "uploads/");
   },
   filename: (req, file, cb) => {
     cb(null, Math.floor(Math.random() * 109288) + file.originalname);
