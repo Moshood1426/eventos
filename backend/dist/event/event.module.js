@@ -16,9 +16,11 @@ const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const auth_module_1 = require("../auth/auth.module");
 const favorites_module_1 = require("../favorites/favorites.module");
+const path_1 = require("path");
+const imgPath = (0, path_1.join)(__dirname, '../../uploads');
 const fileStorage = (0, multer_1.diskStorage)({
     destination: (req, file, cb) => {
-        cb(null, 'uploads');
+        cb(null, imgPath);
     },
     filename: (req, file, cb) => {
         cb(null, Math.floor(Math.random() * 109288) + file.originalname);
